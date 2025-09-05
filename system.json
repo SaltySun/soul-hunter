@@ -1,0 +1,38 @@
+{
+    "id": "soul-hunter",
+    "title": "狩魂者 TRPG (v12)",
+    "description": "Foundry VTT system for 狩魂者 TRPG with attributes, skills, spirit power.",
+    "version": "0.2.0",
+    "compatibility": {
+        "minimum": "12",
+        "verified": "12.343"
+    },
+    "authors": [
+        {
+            "name": "Your Name"
+        }
+    ],
+    "esmodules": [
+        "module/system.mjs"
+    ],
+    "styles": [
+        "styles/styles.css"
+    ],
+    "languages": [
+        {
+            "lang": "zh",
+            "name": "简体中文",
+            "path": "lang/zh.json"
+        }
+    ],
+    "packs": [],
+    "manifest": "",
+    "download": "",
+    "grid": {
+        "distance": 1,
+        "units": "m",
+        "type": 0
+    },
+    "primaryTokenAttribute": "system.resources.hp",
+    "secondaryTokenAttribute": "system.resources.spirit"
+}

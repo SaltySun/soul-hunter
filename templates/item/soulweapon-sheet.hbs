@@ -1,0 +1,52 @@
+<form class="hunter sheet item soulweapon">
+    <header class="sheet-header">
+        <img class="item-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" alt="{{item.name}}" />
+        <h1><input name="name" type="text" value="{{item.name}}" placeholder="灵魂武器名称" /></h1>
+    </header>
+
+    <div class="sheet-body">
+        <div class="form-group">
+            <label>描述</label>
+            <textarea name="system.description" rows="3" placeholder="灵魂武器的详细描述">{{system.description}}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>武器名称</label>
+            <input type="text" name="system.name" value="{{system.name}}" placeholder="武器的真名" />
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>形态印记</label>
+                <input type="text" name="system.form.mark" value="{{system.form.mark}}" placeholder="形态印记名称" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>形态描述</label>
+            <textarea name="system.form.description" rows="2" placeholder="形态印记的详细描述">{{system.form.description}}</textarea>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>灵能印记</label>
+                <input type="text" name="system.soul.mark" value="{{system.soul.mark}}" placeholder="灵能印记名称" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>灵能力量</label>
+            <textarea name="system.soul.power" rows="2" placeholder="灵能印记的力量描述">{{system.soul.power}}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>外观描述</label>
+            <textarea name="system.appearance" rows="3" placeholder="武器的外观描述">{{system.appearance}}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>特殊能力</label>
+            <textarea name="system.abilities" rows="4" placeholder="武器的特殊能力和效果">{{system.abilities}}</textarea>
+        </div>
+    </div>
+</form>

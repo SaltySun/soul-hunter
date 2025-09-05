@@ -1,0 +1,109 @@
+<form class="hunter sheet item spell">
+    <header class="sheet-header">
+        <img class="item-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" alt="{{item.name}}" />
+        <h1><input name="name" type="text" value="{{item.name}}" placeholder="术法名称" /></h1>
+    </header>
+
+    <div class="sheet-body">
+        <div class="form-group">
+            <label>描述</label>
+            <textarea name="system.description" rows="3" placeholder="术法的详细描述">{{system.description}}</textarea>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>施法方式</label>
+                <select name="system.casting.method">
+                    <option value="gesture" {{#if (eq system.casting.method "gesture")}}selected{{/if}}>手势</option>
+                    <option value="incantation" {{#if (eq system.casting.method "incantation")}}selected{{/if}}>咒语</option>
+                    <option value="focus" {{#if (eq system.casting.method "focus")}}selected{{/if}}>专注</option>
+                    <option value="ritual" {{#if (eq system.casting.method "ritual")}}selected{{/if}}>仪式</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>施法时间</label>
+                <select name="system.casting.time">
+                    <option value="action" {{#if (eq system.casting.time "action")}}selected{{/if}}>动作</option>
+                    <option value="reaction" {{#if (eq system.casting.time "reaction")}}selected{{/if}}>反应</option>
+                    <option value="minute" {{#if (eq system.casting.time "minute")}}selected{{/if}}>1分钟</option>
+                    <option value="hour" {{#if (eq system.casting.time "hour")}}selected{{/if}}>1小时</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>灵力消耗</label>
+                <input type="number" name="system.consumption.mp" value="{{system.consumption.mp}}" min="0" />
+            </div>
+            <div class="form-group">
+                <label>其他消耗</label>
+                <input type="text" name="system.consumption.other" value="{{system.consumption.other}}" placeholder="材料、生命值等" />
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>持续类型</label>
+                <select name="system.duration.type">
+                    <option value="instant" {{#if (eq system.duration.type "instant")}}selected{{/if}}>瞬间</option>
+                    <option value="concentration" {{#if (eq system.duration.type "concentration")}}selected{{/if}}>专注</option>
+                    <option value="rounds" {{#if (eq system.duration.type "rounds")}}selected{{/if}}>轮数</option>
+                    <option value="minutes" {{#if (eq system.duration.type "minutes")}}selected{{/if}}>分钟</option>
+                    <option value="hours" {{#if (eq system.duration.type "hours")}}selected{{/if}}>小时</option>
+                    <option value="permanent" {{#if (eq system.duration.type "permanent")}}selected{{/if}}>永久</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>持续时间</label>
+                <input type="number" name="system.duration.value" value="{{system.duration.value}}" min="0" />
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>目标类型</label>
+                <select name="system.target.type">
+                    <option value="single" {{#if (eq system.target.type "single")}}selected{{/if}}>单体</option>
+                    <option value="area" {{#if (eq system.target.type "area")}}selected{{/if}}>范围</option>
+                    <option value="self" {{#if (eq system.target.type "self")}}selected{{/if}}>自身</option>
+                    <option value="touch" {{#if (eq system.target.type "touch")}}selected{{/if}}>接触</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>施法距离</label>
+                <select name="system.target.range">
+                    <option value="touch" {{#if (eq system.target.range "touch")}}selected{{/if}}>接触</option>
+                    <option value="short" {{#if (eq system.target.range "short")}}selected{{/if}}>近距</option>
+                    <option value="medium" {{#if (eq system.target.range "medium")}}selected{{/if}}>中距</option>
+                    <option value="long" {{#if (eq system.target.range "long")}}selected{{/if}}>远距</option>
+                    <option value="sight" {{#if (eq system.target.range "sight")}}selected{{/if}}>视线</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>效果公式</label>
+            <input type="text" name="system.effects.formula" value="{{system.effects.formula}}" placeholder="2d6+智慧修正" />
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>效果类型</label>
+                <select name="system.effects.type">
+                    <option value="damage" {{#if (eq system.effects.type "damage")}}selected{{/if}}>伤害</option>
+                    <option value="healing" {{#if (eq system.effects.type "healing")}}selected{{/if}}>治疗</option>
+                    <option value="buff" {{#if (eq system.effects.type "buff")}}selected{{/if}}>增益</option>
+                    <option value="debuff" {{#if (eq system.effects.type "debuff")}}selected{{/if}}>减益</option>
+                    <option value="utility" {{#if (eq system.effects.type "utility")}}selected{{/if}}>功能</option>
+                    <option value="control" {{#if (eq system.effects.type "control")}}selected{{/if}}>控制</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>特殊效果</label>
+            <textarea name="system.effects.special" rows="3" placeholder="特殊效果描述">{{system.effects.special}}</textarea>
+        </div>
+    </div>
+</form>

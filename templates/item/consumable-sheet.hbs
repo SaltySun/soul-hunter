@@ -1,0 +1,58 @@
+<form class="hunter sheet item consumable">
+    <header class="sheet-header">
+        <img class="item-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" alt="{{item.name}}" />
+        <h1><input name="name" type="text" value="{{item.name}}" placeholder="道具名称" /></h1>
+    </header>
+
+    <div class="sheet-body">
+        <div class="form-group">
+            <label>描述</label>
+            <textarea name="system.description" rows="3" placeholder="道具的详细描述">{{system.description}}</textarea>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>道具类型</label>
+                <select name="system.type">
+                    <option value="talisman" {{#if (eq system.type "talisman")}}selected{{/if}}>符箓</option>
+                    <option value="potion" {{#if (eq system.type "potion")}}selected{{/if}}>恢复品</option>
+                    <option value="coin" {{#if (eq system.type "coin")}}selected{{/if}}>灵币</option>
+                    <option value="material" {{#if (eq system.type "material")}}selected{{/if}}>材料</option>
+                    <option value="tool" {{#if (eq system.type "tool")}}selected{{/if}}>工具</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>当前数量</label>
+                <input type="number" name="system.quantity.value" value="{{system.quantity.value}}" min="0" max="{{system.quantity.max}}" />
+            </div>
+            <div class="form-group">
+                <label>最大数量</label>
+                <input type="number" name="system.quantity.max" value="{{system.quantity.max}}" min="1" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>立即效果</label>
+            <textarea name="system.effects.immediate" rows="3" placeholder="使用时的立即效果">{{system.effects.immediate}}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>持续时间（轮数）</label>
+            <input type="number" name="system.effects.duration" value="{{system.effects.duration}}" min="0" />
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>道具点消耗</label>
+                <input type="number" name="system.cost.items" value="{{system.cost.items}}" min="0" />
+            </div>
+            <div class="form-group">
+                <label>灵力消耗</label>
+                <input type="number" name="system.cost.spirit" value="{{system.cost.spirit}}" min="0" />
+            </div>
+        </div>
+    </div>
+</form>

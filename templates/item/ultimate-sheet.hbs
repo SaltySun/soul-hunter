@@ -1,0 +1,62 @@
+<form class="hunter sheet item ultimate">
+    <header class="sheet-header">
+        <img class="item-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" alt="{{item.name}}" />
+        <h1><input name="name" type="text" value="{{item.name}}" placeholder="绝技/秘传术法名称" /></h1>
+    </header>
+
+    <div class="sheet-body">
+        <div class="form-group">
+            <label>描述</label>
+            <textarea name="system.description" rows="3" placeholder="绝技的详细描述">{{system.description}}</textarea>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>类型</label>
+                <select name="system.type">
+                    <option value="martial" {{#if (eq system.type "martial")}}selected{{/if}}>武技绝技</option>
+                    <option value="spell" {{#if (eq system.type "spell")}}selected{{/if}}>秘传术法</option>
+                    <option value="special" {{#if (eq system.type "special")}}selected{{/if}}>特殊能力</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>需求等级</label>
+                <input type="number" name="system.requirements.level" value="{{system.requirements.level}}" min="1" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>解锁条件</label>
+            <textarea name="system.requirements.conditions" rows="2" placeholder="解锁条件描述">{{system.requirements.conditions}}</textarea>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>灵力消耗</label>
+                <input type="number" name="system.consumption.mp" value="{{system.consumption.mp}}" min="0" />
+            </div>
+            <div class="form-group">
+                <label>时髦值消耗</label>
+                <input type="number" name="system.consumption.style" value="{{system.consumption.style}}" min="0" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>其他消耗</label>
+            <input type="text" name="system.consumption.other" value="{{system.consumption.other}}" placeholder="其他消耗说明" />
+        </div>
+
+        <div class="form-group">
+            <label>威力公式</label>
+            <input type="text" name="system.power.formula" value="{{system.power.formula}}" placeholder="3d6+属性修正+专长加值" />
+        </div>
+
+        <div class="form-group">
+            <label>特殊效果</label>
+            <textarea name="system.power.effects" rows="4" placeholder="绝技的特殊效果和机制">{{system.power.effects}}</textarea>
+        </div>
+    </div>
+</form>

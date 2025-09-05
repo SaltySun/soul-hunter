@@ -1,0 +1,592 @@
+/* 全局样式 */
+.soul-hunter.sheet,
+.soul-hunter.sheet form {
+    font-family: "Noto Sans CJK SC", "Microsoft YaHei", Arial, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 表单头部 */
+.soul-hunter.sheet .sheet-header {
+    background: linear-gradient(90deg, #2d3748 0%, #4a5568 100%);
+    padding: 16px;
+    border-radius: 8px 8px 0 0;
+    border-bottom: 2px solid #4a5568;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    max-height: 220px;
+}
+.sheet header.sheet-header img {
+    width: 100%;
+    height: 100%;
+}
+.soul-hunter.sheet .sheet-header .header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+}
+
+.soul-hunter.sheet .sheet-header .profile-img{
+    width: 100%;
+    max-height: 200px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 2px solid #4a5568;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.soul-hunter.sheet .sheet-header .profile-img:hover {
+    border-color: #63b3ed;
+    box-shadow: 0 4px 12px rgba(99, 179, 237, 0.4);
+    transform: scale(1.05);
+}
+
+.soul-hunter.sheet .sheet-header h1 {
+    margin: 0;
+    flex: 1;
+}
+
+.soul-hunter.sheet .sheet-header h1 input {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    width: 100%;
+}
+
+.soul-hunter.sheet .sheet-header h1 input:focus {
+    outline: 1px solid #63b3ed;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+/* NPC表单头部样式 */
+.soul-hunter.sheet.npc .sheet-header {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+}
+
+.soul-hunter.sheet.npc .sheet-header .profile-img {
+    width: 100%;
+    max-height: 200px;
+}
+
+/* 头部资源栏 */
+.header-resources {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.header-resources .resource-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+.header-resources .resource-bar label {
+    color: #a0aec0;
+    font-size: 12px;
+    min-width: 40px;
+}
+
+/* 标签页导航 */
+.sheet-tabs {
+    display: flex;
+    background: #2d3748;
+    border-radius: 6px;
+    margin: 16px;
+    overflow: hidden;
+}
+
+.sheet-tabs .item {
+    flex: 1;
+    padding: 12px 16px;
+    background: #2d3748;
+    color: #a0aec0;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    text-decoration: none;
+}
+
+.sheet-tabs .item:hover {
+    background: #4a5568;
+    color: #e0e0e0;
+}
+
+.sheet-tabs .item.active {
+    background: #4299e1;
+    color: #fff;
+}
+
+/* 标签页内容 */
+.tab-content {
+    padding: 16px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.tab {
+    display: none;
+}
+
+.tab.active {
+    display: block;
+}
+
+/* 主要网格布局 */
+.main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.main-grid section {
+    background: rgba(45, 55, 72, 0.8);
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px solid #4a5568;
+}
+
+.main-grid section h3 {
+    margin: 0 0 16px 0;
+    color: #4299e1;
+    font-size: 18px;
+    font-weight: bold;
+    border-bottom: 1px solid #4a5568;
+    padding-bottom: 8px;
+}
+
+/* 属性网格 */
+.attr-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.attribute {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.attribute label {
+    color: #a0aec0;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.attribute input {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid #4a5568;
+    border-radius: 4px;
+    padding: 8px;
+    color: #fff;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.attribute input:focus {
+    outline: none;
+    border-color: #4299e1;
+    box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.3);
+}
+
+/* 资源网格 */
+.resource-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.resource {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.resource label {
+    color: #a0aec0;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.resource-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.resource-bar input {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid #4a5568;
+    border-radius: 4px;
+    padding: 6px 8px;
+    color: #fff;
+    text-align: center;
+    flex: 1;
+    min-width: 0;
+}
+
+.resource-bar span {
+    color: #a0aec0;
+    font-weight: bold;
+}
+
+/* 技能网格 */
+.skills-grid {
+    display: grid;
+    gap: 8px;
+}
+
+.skill-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    transition: background 0.2s ease;
+}
+
+.skill-row:hover {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.skill-row label {
+    color: #e0e0e0;
+    min-width: 80px;
+    font-weight: 500;
+}
+
+.skill-row input {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid #4a5568;
+    border-radius: 4px;
+    padding: 4px 8px;
+    color: #fff;
+    text-align: center;
+    width: 50px;
+}
+
+.roll-button {
+    background: #4299e1;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.roll-button:hover {
+    background: #3182ce;
+}
+
+.roll-button i {
+    font-size: 14px;
+}
+
+/* 灵能力表单 */
+.power-form {
+    display: grid;
+    gap: 12px;
+}
+
+.form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.form-row label {
+    color: #a0aec0;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.form-row input,
+.form-row textarea,
+.form-row select {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid #4a5568;
+    border-radius: 4px;
+    padding: 8px;
+    color: #fff;
+    resize: vertical;
+}
+
+.form-row input:focus,
+.form-row textarea:focus,
+.form-row select:focus {
+    outline: none;
+    border-color: #4299e1;
+    box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.3);
+}
+
+/* 战斗标签页 */
+.combat-grid {
+    display: grid;
+    gap: 20px;
+}
+
+.combat-values,
+.growth-values {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+}
+
+.combat-value,
+.growth-value {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.combat-value label,
+.growth-value label {
+    color: #a0aec0;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.combat-value input,
+.growth-value input {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid #4a5568;
+    border-radius: 4px;
+    padding: 8px;
+    color: #fff;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* 背景表单 */
+.background-form {
+    display: grid;
+    gap: 16px;
+}
+
+/* 物品管理 */
+.items-header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding: 16px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+.item-create {
+    background: #48bb78;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.item-create:hover {
+    background: #38a169;
+}
+
+.items-list {
+    display: grid;
+    gap: 8px;
+}
+
+.item-entry {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid #4a5568;
+    border-radius: 6px;
+    transition: background 0.2s ease;
+}
+
+.item-entry:hover {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.item-name {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.item-name img {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.item-name span {
+    color: #e0e0e0;
+}
+
+.item-type {
+    color: #a0aec0;
+    font-size: 12px;
+}
+
+.item-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.item-edit,
+.item-delete {
+    background: transparent;
+    border: 1px solid #4a5568;
+    color: #a0aec0;
+    padding: 6px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.item-edit:hover {
+    background: #4299e1;
+    color: #fff;
+    border-color: #4299e1;
+}
+
+.item-delete:hover {
+    background: #e53e3e;
+    color: #fff;
+    border-color: #e53e3e;
+}
+
+/* 物品表单样式 */
+.soul-hunter.sheet.item {
+    background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+}
+
+.soul-hunter.sheet.item .sheet-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.soul-hunter.sheet.item .sheet-header .item-img {
+    width: 64px;
+    height: 64px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 2px solid #4a5568;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.soul-hunter.sheet.item .sheet-header .item-img:hover {
+    border-color: #63b3ed;
+    box-shadow: 0 4px 12px rgba(99, 179, 237, 0.4);
+    transform: scale(1.05);
+}
+
+/* NPC表单样式 */
+.soul-hunter.sheet.npc {
+    background: linear-gradient(135deg, #553c9a 0%, #7c3aed 100%);
+}
+
+.npc-grid {
+    display: grid;
+    gap: 16px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .main-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .attr-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .resource-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .combat-values,
+    .growth-values {
+        grid-template-columns: 1fr;
+    }
+    
+    .items-header {
+        flex-direction: column;
+    }
+    
+    .sheet-tabs {
+        flex-direction: column;
+    }
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tab.active {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* 滚动条样式 */
+.soul-hunter.sheet ::-webkit-scrollbar {
+    width: 8px;
+}
+
+.soul-hunter.sheet ::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+.soul-hunter.sheet ::-webkit-scrollbar-thumb {
+    background: #4a5568;
+    border-radius: 4px;
+}
+
+.soul-hunter.sheet ::-webkit-scrollbar-thumb:hover {
+    background: #63b3ed;
+}

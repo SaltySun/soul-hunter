@@ -1,0 +1,77 @@
+<form class="hunter sheet actor npc">
+    <header class="sheet-header">
+        <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" alt="{{actor.name}}" />
+        <h1><input name="name" type="text" value="{{actor.name}}" placeholder="NPC名称" /></h1>
+    </header>
+
+    <div class="sheet-body">
+        <div class="npc-grid">
+            <!-- 基础属性 -->
+            <section class="attributes">
+                <h3>基础属性</h3>
+                <div class="attr-grid">
+                    <div class="attribute">
+                        <label>体魄</label>
+                        <input type="number" name="system.attributes.physique.value" value="{{system.attributes.physique.value}}" min="1" max="10" />
+                    </div>
+                    <div class="attribute">
+                        <label>智慧</label>
+                        <input type="number" name="system.attributes.intellect.value" value="{{system.attributes.intellect.value}}" min="1" max="10" />
+                    </div>
+                    <div class="attribute">
+                        <label>心魂</label>
+                        <input type="number" name="system.attributes.spirit.value" value="{{system.attributes.spirit.value}}" min="1" max="10" />
+                    </div>
+                </div>
+            </section>
+
+            <!-- 资源 -->
+            <section class="resources">
+                <h3>资源</h3>
+                <div class="resource-grid">
+                    <div class="resource">
+                        <label>生命值</label>
+                        <div class="resource-bar">
+                            <input type="number" name="system.resources.hp.value" value="{{system.resources.hp.value}}" min="0" max="{{system.resources.hp.max}}" />
+                            <span>/</span>
+                            <input type="number" name="system.resources.hp.max" value="{{system.resources.hp.max}}" min="1" />
+                        </div>
+                    </div>
+                    <div class="resource">
+                        <label>灵力值</label>
+                        <div class="resource-bar">
+                            <input type="number" name="system.resources.mp.value" value="{{system.resources.mp.value}}" min="0" max="{{system.resources.mp.max}}" />
+                            <span>/</span>
+                            <input type="number" name="system.resources.mp.max" value="{{system.resources.mp.max}}" min="0" />
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 战斗数值 -->
+            <section class="combat-stats">
+                <h3>战斗数值</h3>
+                <div class="combat-values">
+                    <div class="combat-value">
+                        <label>防御值</label>
+                        <input type="number" name="system.combat.defense.value" value="{{system.combat.defense.value}}" min="0" />
+                    </div>
+                    <div class="combat-value">
+                        <label>术法强度</label>
+                        <input type="number" name="system.combat.spellpower.value" value="{{system.combat.spellpower.value}}" min="0" />
+                    </div>
+                    <div class="combat-value">
+                        <label>武艺强度</label>
+                        <input type="number" name="system.combat.martialpower.value" value="{{system.combat.martialpower.value}}" min="0" />
+                    </div>
+                </div>
+            </section>
+
+            <!-- 描述 -->
+            <section class="description">
+                <h3>描述</h3>
+                <textarea name="system.description" rows="6" placeholder="NPC的详细描述">{{system.description}}</textarea>
+            </section>
+        </div>
+    </div>
+</form>

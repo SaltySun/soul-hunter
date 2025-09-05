@@ -1,0 +1,316 @@
+{
+    "Actor": {
+        "types": [
+            "character",
+            "npc",
+            "monster"
+        ],
+        "character": {
+            "attributes": {
+                "physique": {
+                    "value": 3,
+                    "label": "体魄"
+                },
+                "intellect": {
+                    "value": 3,
+                    "label": "智慧"
+                },
+                "spirit": {
+                    "value": 3,
+                    "label": "心魂"
+                }
+            },
+            "resources": {
+                "consciousness": {
+                    "value": 10,
+                    "max": 10,
+                    "label": "灵识"
+                },
+                "hp": {
+                    "value": 10,
+                    "max": 10,
+                    "label": "生命值"
+                },
+                "mp": {
+                    "value": 10,
+                    "max": 10,
+                    "label": "灵力值"
+                },
+                "style": {
+                    "value": 10,
+                    "max": 10,
+                    "label": "时髦值"
+                },
+                "items": {
+                    "value": 3,
+                    "label": "道具点"
+                }
+            },
+            "skills": {
+                "athletics": {
+                    "value": 1,
+                    "label": "运动",
+                    "attribute": "physique"
+                },
+                "operation": {
+                    "value": 1,
+                    "label": "操作",
+                    "attribute": "physique"
+                },
+                "stealth": {
+                    "value": 1,
+                    "label": "隐秘",
+                    "attribute": "physique"
+                },
+                "investigation": {
+                    "value": 1,
+                    "label": "调查",
+                    "attribute": "intellect"
+                },
+                "insight": {
+                    "value": 1,
+                    "label": "洞察",
+                    "attribute": "intellect"
+                },
+                "persuasion": {
+                    "value": 1,
+                    "label": "说服",
+                    "attribute": "spirit"
+                },
+                "soulhunting": {
+                    "value": 1,
+                    "label": "狩魂学识",
+                    "attribute": "spirit"
+                }
+            },
+            "combat": {
+                "defense": {
+                    "value": 10,
+                    "label": "防御值"
+                },
+                "spellpower": {
+                    "value": 0,
+                    "label": "术法强度"
+                },
+                "martialpower": {
+                    "value": 0,
+                    "label": "武艺强度"
+                }
+            },
+            "growth": {
+                "experience": {
+                    "value": 0,
+                    "label": "经验值"
+                },
+                "consciousnessUpgrade": {
+                    "available": 0,
+                    "label": "灵识提升次数"
+                }
+            },
+            "background": {
+                "bonds": {
+                    "value": "",
+                    "label": "羁绊"
+                },
+                "story": {
+                    "value": "",
+                    "label": "故事经历"
+                },
+                "teamRelation": {
+                    "value": "",
+                    "label": "团队关系"
+                }
+            },
+            "power": {
+                "name": "",
+                "tags": "",
+                "consumption": "",
+                "bonus": "",
+                "weakness": "",
+                "description": ""
+            }
+        },
+        "npc": {
+            "attributes": {
+                "physique": {
+                    "value": 3
+                },
+                "intellect": {
+                    "value": 3
+                },
+                "spirit": {
+                    "value": 3
+                }
+            },
+            "resources": {
+                "hp": {
+                    "value": 10,
+                    "max": 10
+                },
+                "mp": {
+                    "value": 10,
+                    "max": 10
+                }
+            },
+            "combat": {
+                "defense": {
+                    "value": 10
+                },
+                "spellpower": {
+                    "value": 0
+                },
+                "martialpower": {
+                    "value": 0
+                }
+            },
+            "description": ""
+        },
+        "monster": {
+            "attributes": {
+                "physique": {
+                    "value": 3
+                },
+                "intellect": {
+                    "value": 3
+                },
+                "spirit": {
+                    "value": 3
+                }
+            },
+            "resources": {
+                "hp": {
+                    "value": 10,
+                    "max": 10
+                }
+            },
+            "combat": {
+                "defense": {
+                    "value": 10
+                },
+                "damage": {
+                    "value": "1d6"
+                }
+            },
+            "special": {
+                "abilities": "",
+                "weaknesses": ""
+            },
+            "description": ""
+        }
+    },
+    "Item": {
+        "types": [
+            "martial",
+            "spell",
+            "talent",
+            "soulweapon",
+            "consumable",
+            "ultimate"
+        ],
+        "martial": {
+            "consumption": {
+                "type": "none",
+                "value": 0
+            },
+            "target": {
+                "type": "single",
+                "range": "melee"
+            },
+            "damage": {
+                "formula": "1d6",
+                "type": "physical"
+            },
+            "effects": {
+                "special": ""
+            },
+            "description": ""
+        },
+        "spell": {
+            "casting": {
+                "method": "gesture",
+                "time": "action"
+            },
+            "consumption": {
+                "mp": 1,
+                "other": ""
+            },
+            "duration": {
+                "type": "instant",
+                "value": 0
+            },
+            "target": {
+                "type": "single",
+                "range": "touch"
+            },
+            "effects": {
+                "formula": "",
+                "type": "utility",
+                "special": ""
+            },
+            "description": ""
+        },
+        "talent": {
+            "type": "passive",
+            "trigger": {
+                "condition": "",
+                "frequency": "always"
+            },
+            "restriction": {
+                "scene": "",
+                "other": ""
+            },
+            "effects": {
+                "passive": "",
+                "active": ""
+            },
+            "description": ""
+        },
+        "soulweapon": {
+            "name": "",
+            "form": {
+                "mark": "",
+                "description": ""
+            },
+            "soul": {
+                "mark": "",
+                "power": ""
+            },
+            "appearance": "",
+            "abilities": "",
+            "description": ""
+        },
+        "consumable": {
+            "type": "talisman",
+            "quantity": {
+                "value": 1,
+                "max": 1
+            },
+            "effects": {
+                "immediate": "",
+                "duration": 0
+            },
+            "cost": {
+                "items": 0,
+                "spirit": 0
+            },
+            "description": ""
+        },
+        "ultimate": {
+            "type": "martial",
+            "requirements": {
+                "level": 1,
+                "conditions": ""
+            },
+            "consumption": {
+                "mp": 0,
+                "style": 0,
+                "other": ""
+            },
+            "power": {
+                "formula": "",
+                "effects": ""
+            },
+            "description": ""
+        }
+    }
+}

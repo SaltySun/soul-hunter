@@ -1,0 +1,207 @@
+{
+    "HunterSouls": {
+        "Attributes": "属性",
+        "Resources": "资源",
+        "Skills": "技能",
+        "Power": "灵能力",
+        "Combat": "战斗",
+        "Background": "背景",
+        "Items": "物品",
+        "Growth": "成长",
+        
+        "Attribute": {
+            "Physique": "体魄",
+            "Intellect": "智慧",
+            "Spirit": "心魂"
+        },
+        
+        "Resource": {
+            "Consciousness": "灵识",
+            "HP": "生命值",
+            "MP": "灵力值",
+            "Style": "时髦值",
+            "Items": "道具点"
+        },
+        
+        "Skill": {
+            "Athletics": "运动",
+            "Operation": "操作",
+            "Stealth": "隐秘",
+            "Investigation": "调查",
+            "Insight": "洞察",
+            "Persuasion": "说服",
+            "Soulhunting": "狩魂学识"
+        },
+        
+        "Combat": {
+            "Defense": "防御值",
+            "SpellPower": "术法强度",
+            "MartialPower": "武艺强度"
+        },
+        
+        "Growth": {
+            "Experience": "经验值",
+            "ConsciousnessUpgrade": "灵识提升次数"
+        },
+        
+        "Background": {
+            "Bonds": "羁绊",
+            "Story": "故事经历",
+            "TeamRelation": "团队关系"
+        },
+        
+        "Power": {
+            "Name": "名称",
+            "Tags": "专精标签",
+            "Consumption": "消耗",
+            "Bonus": "加骰",
+            "Weakness": "弱点触发",
+            "Description": "描述"
+        },
+        
+        "ItemType": {
+            "Martial": "武技",
+            "Spell": "术法",
+            "Talent": "专长",
+            "SoulWeapon": "灵魂武器",
+            "Consumable": "道具",
+            "Ultimate": "绝技"
+        },
+        
+        "Martial": {
+            "Consumption": "消耗",
+            "Target": "目标",
+            "Damage": "伤害",
+            "Effects": "效果",
+            "ConsumptionType": {
+                "None": "无消耗",
+                "MP": "灵力",
+                "Style": "时髦值",
+                "HP": "生命值"
+            },
+            "TargetType": {
+                "Single": "单体",
+                "Area": "范围",
+                "Self": "自身"
+            },
+            "RangeType": {
+                "Melee": "近战",
+                "Ranged": "远程",
+                "Touch": "接触"
+            },
+            "DamageType": {
+                "Physical": "物理",
+                "Spiritual": "精神",
+                "Special": "特殊"
+            }
+        },
+        
+        "Spell": {
+            "Casting": "施法",
+            "Duration": "持续时间",
+            "CastingMethod": {
+                "Gesture": "手势",
+                "Incantation": "咒语",
+                "Focus": "专注",
+                "Ritual": "仪式"
+            },
+            "CastingTime": {
+                "Action": "动作",
+                "Reaction": "反应",
+                "Minute": "1分钟",
+                "Hour": "1小时"
+            },
+            "DurationType": {
+                "Instant": "瞬间",
+                "Concentration": "专注",
+                "Rounds": "轮数",
+                "Minutes": "分钟",
+                "Hours": "小时",
+                "Permanent": "永久"
+            },
+            "EffectType": {
+                "Damage": "伤害",
+                "Healing": "治疗",
+                "Buff": "增益",
+                "Debuff": "减益",
+                "Utility": "功能",
+                "Control": "控制"
+            }
+        },
+        
+        "Talent": {
+            "Type": "类型",
+            "Trigger": "触发条件",
+            "Restriction": "限制",
+            "TalentType": {
+                "Passive": "被动",
+                "Active": "主动",
+                "Reaction": "反应"
+            },
+            "Frequency": {
+                "Always": "总是",
+                "OncePerTurn": "每回合一次",
+                "OncePerScene": "每场景一次",
+                "OncePerSession": "每次游戏一次",
+                "Limited": "有限次数"
+            }
+        },
+        
+        "SoulWeapon": {
+            "FormMark": "形态印记",
+            "SoulMark": "灵能印记",
+            "Appearance": "外观描述",
+            "Abilities": "特殊能力"
+        },
+        
+        "Consumable": {
+            "Type": "类型",
+            "Quantity": "数量",
+            "Effects": "效果",
+            "Cost": "消耗",
+            "ConsumableType": {
+                "Talisman": "符箓",
+                "Potion": "恢复品",
+                "Coin": "灵币",
+                "Material": "材料",
+                "Tool": "工具"
+            }
+        },
+        
+        "Ultimate": {
+            "Requirements": "需求",
+            "Power": "威力"
+        },
+        
+        "Dialog": {
+            "UseStyle": "使用时髦值",
+            "UseStyleContent": "是否消耗1点时髦值获得额外1d6加骰？",
+            "CurrentStyle": "当前时髦值",
+            "DeleteItem": "删除物品",
+            "DeleteConfirm": "确定要删除吗？",
+            "InsufficientResource": "资源不足！"
+        },
+        
+        "Chat": {
+            "SkillCheck": "技能检定",
+            "AttributeCheck": "属性检定",
+            "Damage": "伤害",
+            "UsedItem": "使用了物品"
+        },
+        
+        "Tab": {
+            "Main": "主要",
+            "Combat": "战斗",
+            "Background": "背景",
+            "Items": "物品"
+        },
+        
+        "Button": {
+            "Roll": "掷骰",
+            "Create": "创建",
+            "Edit": "编辑",
+            "Delete": "删除",
+            "Use": "使用"
+        }
+    }
+}

@@ -1,0 +1,644 @@
+{
+    "CSB": {
+        "ActiveEffects": {
+            "AddToPredefinedButton": {
+                "Text": "Effekt hinzufügen",
+                "Tooltip": "Aktiven Effekt zu der vordefinierten Liste hinzufügen"
+            },
+            "RemoveFromPredefinedButton": {
+                "Text": "Effekt entfernen",
+                "Tooltip": "Aktiven Effekt aus der vordefinierten Liste entfernen"
+            },
+            "UpdatePredefinedButton": {
+                "Text": "Effekt aktualisieren",
+                "Tooltip": "Aktiven Effekt in der vordefinierten Liste aktualisieren"
+            },
+            "Transfer": {
+                "Name": "Effekt anwenden an Eltern-Entität",
+                "Hint": "Wenn ausgewählt, wird dieser Effekt an jenen Akteur / jenes Item angewendet, der die Eltern-Item-Entität des Effekts besitzt."
+            },
+            "EffectPriorityLabel": "Effekt-Priorität",
+            "ConfigureCounter": "Öffne Counter-Konfiguration"
+        },
+        "Attributes": {
+            "AttributeBarsDialog": {
+                "Title": "Attributleisten des Akteurs"
+            },
+            "EditAttributeBarsDialog": {
+                "MissingData": "Name, Wert und Maximum müssen für jede Attributleiste eingegeben werden",
+                "Title": "Bearbeite Attributleisten"
+            },
+            "EditHiddenAttributesDialog": {
+                "MissingData": "Name und Formel müssen für jedes Attribut eingegeben werden",
+                "Title": "Bearbeite Attribute"
+            },
+            "Formula": "Formel",
+            "HiddenAttributesDialog": {
+                "Title": "Versteckte Attribute des Akteurs"
+            },
+            "Maximum": "Maximum",
+            "Name": "Name",
+            "Value": "Wert"
+        },
+        "ChatCommands": {
+            "SheetRollCommand": "Führe einen Roll durch von einem Charakterbogen",
+            "SheetAltRollCommand": "Führe einen alternativen Roll durch von einem Charakterbogen",
+            "ActorNotFound": "Kein geeigneter ausgewählter Akteur für einen Roll"
+        },
+        "ComponentProperties": {
+            "ActiveEffectContainer": {
+                "Columns": {
+                    "Ref": {
+                        "Title": "Referenz-Spalte des Aktiven Effekts",
+                        "LabelDefault": "Name"
+                    },
+                    "Active": {
+                        "Title": "Status-Spalte des Aktiven Effekts",
+                        "LabelDefault": "Aktiv"
+                    },
+                    "Origin": {
+                        "Title": "Ursprungs-Spalte des Aktiven Effekts",
+                        "LabelDefault": "Ursprung"
+                    },
+                    "Description": {
+                        "Title": "Beschreibungs-Spalte des Aktiven Effekts",
+                        "LabelDefault": "Beschreibung",
+                        "Format": {
+                            "Full": "Volle Beschreibung",
+                            "Short": "Nur erster Satz"
+                        }
+                    },
+                    "Count": {
+                        "Title": "Zähler-Spalte des Aktiven Effekts",
+                        "LabelDefault": "Zähler"
+                    }
+                },
+                "DeleteActiveEffectDialog": {
+                    "Content": "Bist du dir sicher, dass du diesen aktiven Effekt löschen willst?",
+                    "Title": "Lösche aktiven Effekt"
+                },
+                "HideEmpty": "Verstecke wenn leer",
+                "ShowConfirmationDialogOnActiveEffectDelete": "Zeige Bestätigungs-Fenster bei Löschung eines aktiven Effekts",
+                "ShowActiveEffectDeleteButton": "Zeige 'Löschen'-Button eines aktiven Effekts",
+                "TableTitle": "Tabellentitel",
+                "ShowCreateButton": "Zeige 'Erstellen'-Button",
+                "ColumnAlign": "Ausrichtung",
+                "ColumnLabel": "Label",
+                "ColumnSort": "Position",
+                "ColumnEnabled": "Aktiv",
+                "ColumnFormat": "Format",
+                "ColumnReadonly": "Nur lesend",
+                "NewActiveEffect": "Neuer Aktiver Effekt",
+                "ShowOnlyOwnEffects": "Verstecke Effekte von verbundenen Items",
+                "SuggestExistingEffects": "Empfehle Effekte, auch wenn sie bereits in der Entität existieren",
+                "StatusCounter": "Du kannst die Zähler-Spalte verwenden, indem du das {url} Modul installierst und aktivierst",
+                "FilterByTags": {
+                    "Title": "Filtere Aktive Effekte nach Tags",
+                    "FieldLabel": "Tags"
+                }
+            },
+            "AdditionalCssClasses": "Zusätzliche CSS-Klassen",
+            "AdvancedConfiguration": "Erweiterte Konfigurationen",
+            "Alignment": {
+                "AlignCenter": "Zentriert",
+                "AlignJustify": "Ausrichten",
+                "AlignLeft": "Links",
+                "AlignRight": "Rechts"
+            },
+            "AllowFormula": "Erlaubt Formeln",
+            "AllowFormulaCreateTimeOnly": "Ist nur relevant bei der Erstellung (keine automatischen Updates)",
+            "CheckedByDefault": "Standardmäßig ausgewählt",
+            "ComponentDialog": {
+                "Delete": {
+                    "Content": "Bist du dir sicher, dass du diese Komponente löschen willst?",
+                    "Title": "Lösche Komponente"
+                },
+                "Edit": {
+                    "Title": "Bearbeite Komponente"
+                }
+            },
+            "ComponentKey": "Komponenten-Schlüssel",
+            "ComponentKeyWarning": "Dein Schlüssel ist ein reservierter Begriff im Formel-Berechnungssystem. Sei gewarnt, dass die Benutzung dieses Schlüssels zu unerwartetem Verhalten führen kann.",
+            "ComponentType": {
+                "ActiveEffectContainer": "Aktive Effekte Anzeige-Tabelle",
+                "Checkbox": "Kontrollkästchen",
+                "ConditionalModifierList": "Selektor für bedingte Modifikatoren",
+                "Dropdown": "Dropdown",
+                "DynamicTable": "Dynamische Tabelle",
+                "ItemContainer": "Item Anzeige-Tabelle",
+                "Label": "Label",
+                "Meter": "Meter",
+                "NumberField": "Nummernfeld",
+                "Panel": "Panel",
+                "RadioButton": "Optionsfeld",
+                "RichTextArea": "Rich-Text-Bereichsfeld",
+                "SectionTitle": "Wähle Komponenten-Typ aus",
+                "Tab": "Tab",
+                "TabbedPanel": "Panel mit Tabs",
+                "Table": "Tabelle",
+                "TextField": "Textfeld"
+            },
+            "ConditionalModifierList": {
+                "DisplayInfoIcon": "Zeige Info-Icon an",
+                "FilterModifierGroup": "Filtern nach Modifikator-Gruppen",
+                "GroupColumnAlign": "Spalten-Ausrichtung für Gruppe",
+                "GroupColumnName": "Spalten-Name für Gruppe",
+                "GroupFilterFormula": "Erweitert - Gruppen-Filter-Formel",
+                "GroupFilterFormulaTitle": "Die Formel sollte die Gruppennamen (getrennt durch Komma) zurückgeben. Überschreibt den Filter für Modifikator-Gruppen.",
+                "SelectGroup": "Wähle Gruppen (keine Auswahl -> zeigt alle)",
+                "SelectionColumnAlign": "Spalten-Ausrichtung für Auswahl",
+                "SelectionColumnName": "Spalten-Name für Auswahl",
+                "SelectionColumnNameDefault": "Ausgewählt",
+                "GroupColumnNameDefault": "Gruppe"
+            },
+            "DefaultValue": "Standard-Wert",
+            "Dropdown": {
+                "OptionsOrigin": {
+                    "Custom": "Custom",
+                    "DefaultValueTitle": "Das wird der ausgewählte Schlüssel bei der Erstellung sein. Ohne einen wird automatisch eine leere Option hinzugefügt",
+                    "DynamicTable": "Dynamische Tabelle",
+                    "DynamicTableKey": "Schlüssel der dynamischen Tabelle",
+                    "DynamicTableOptionKey": "Einträge von der Spalte der dynamischen Tabelle, welche als Schlüssel der Optionen verwendet werden",
+                    "DynamicTableOptionLabel": "Einträge von der Spalte der dynamischen Tabelle, welche als Labels der Optionen verwendet werden",
+                    "ExpectedValueType": "Erwarteter Wert: Array (oder komma-separierter (CSV) String)",
+                    "Formula": "Formel",
+                    "FormulaForKeyOption": "Formel für die Schlüssel der Optionen",
+                    "FormulaForLabelOption": "Formel für die Labels der Optionen",
+                    "IfNotSet": "Falls nicht gesetzt, werden die Schlüssel-Optionen für die Label-Optionen verwendet",
+                    "Key": "Schlüssel",
+                    "Label": "Label",
+                    "Options": "Optionen",
+                    "SectionTitle": "Ursprung der Dropdown-Optionen"
+                }
+            },
+            "DynamicTable": {
+                "AddMultipleRowsDialog": {
+                    "AddMultipleRows": "Füge mehrere Zeilen hinzu",
+                    "HowManyRows": "Wie viele Zeilen?",
+                    "RowCountError": "Anzahl Zeilen sollte eine positive Zahl sein."
+                },
+                "CanAddRow": "Sollen Spieler neue Einträge in der Tabelle erstellen können?",
+                "ConfirmDialogOnDelete": "Zeige Bestätigungs-Fenster bei Löschung einer Zeile",
+                "DeleteRowDialog": {
+                    "Content": "Bist du dir sicher, dass du diese Zeile löschen willst?",
+                    "Title": "Lösche Zeile"
+                }
+            },
+            "Errors": {
+                "AlphanumericPatternError": "\"{PROPERTY_NAME}\" muss ein String sein, der nur aus Groß- und Kleinbuchstaben und Unterstrichen besteht",
+                "DropdownOptionValidationError": "Jede Option im Dropdown muss einen Schlüssel besitzen",
+                "DynamicTableAutoFilterValidationError": "Du musst einen Wert für {KEY} eingeben bevor du speicherst",
+                "NotGreaterThanZeroError": "\"{PROPERTY_NAME}\" muss größer als 0 sein",
+                "NotUniqueError": "\"{PROPERTY_NAME}\" muss einzigartig sein",
+                "RequiredFieldError": "\"{PROPERTY_NAME}\" darf nicht leer sein"
+            },
+            "ExtensibleTable": {
+                "Alignment": "Ausrichtung",
+                "ColumnName": "Spaltenname",
+                "ColumnNameBold": "Fettgedruckte Spaltennamen",
+                "ColumnSort": {
+                    "SortLeft": "Sortiere Komponenten nach links",
+                    "SortRight": "Sortiere Komponenten nach rechts"
+                },
+                "DisplayColumnName": "Zeige Spaltennamen an",
+                "Sort": {
+                    "AddSortingCriteria": "Sortierkriterien hinzufügen",
+                    "Auto": "Auto",
+                    "ColumnKey": "Spalten-Schlüssel",
+                    "Disabled": "Ausgeschaltet",
+                    "Manual": "Manuell",
+                    "Operator": "Operator",
+                    "SortOptions": "Sortieroptionen",
+                    "Title": "Sortiere Einträge",
+                    "Value": "Wert"
+                },
+                "SortOperator": {
+                    "Ascending": "Aufsteigend",
+                    "Descending": "Absteigend",
+                    "Equals": "==",
+                    "NotEquals": "!="
+                }
+            },
+            "InputComponent": {
+                "CustomSizeInvalid": "Benutzerdefinierte Größe muss eine Zahl größer gleich 5 sein",
+                "Label": "Label"
+            },
+            "ItemContainer": {
+                "DeleteItemDialog": {
+                    "Content": "Bist du dir sicher, dass du dieses Item löschen willst?",
+                    "Title": "Lösche Item"
+                },
+                "FilterItem": "Filtere Items",
+                "FilterItemDesc": "Item-Filter-Formel",
+                "HideEmpty": "Verstecke wenn leer",
+                "ItemRefColAlign": "Spalten-Ausrichtung der Item-Referenz",
+                "ItemRefColLabel": "Spalten-Label der Item-Referenz",
+                "SelectTemplate": "Wähle Templates aus",
+                "ShowConfirmationDialogOnItemDelete": "Zeige Bestätigungs-Fenster bei Löschung eines Items",
+                "ShowItemDeleteButton": "Zeige 'Item löschen'-Button",
+                "ShowItemStatus": "(nur SL) Zeige Item Status",
+                "TableTitle": "Tabellentitel",
+                "ItemRefColLabelDefault": "Name"
+            },
+            "Label": {
+                "Actions": {
+                    "AddAltAsMacro": "Alternative - Als Macro erstellen",
+                    "AddAsMacro": "Als Macro erstellen",
+                    "CopyAltChatCommand": "Alternative - Kopiere als Chat-Kommando",
+                    "CopyAltMacroScript": "Alternative - Kopiere als Macro-Skript",
+                    "CopyChatCommand": "Kopiere als Chat-Kommando",
+                    "CopyChatCommandFailure": "Bitte kopiere das Kommando im Textfeld weiter unten. Du kannst es dann im Chat oder in einem Chat-Macro verwenden.",
+                    "CopyChatCommandSuccess": "Chat-Kommando zur Zwischenablage hinzugefügt. Du kannst es im Chat oder in einem Chat-Macro verwenden.",
+                    "CopyMacroScript": "Kopiere als Macro-Skript",
+                    "CopyMacroScriptFailure": "Bitte kopiere das Skript im Textfeld weiter unten. Du kannst es dann in einem Skript-Macro verwenden.",
+                    "CopyMacroScriptSuccess": "Macro-Skript zur Zwischenablage hinzugefügt. Du kannst es in einem Skript-Macro verwenden."
+                },
+                "AddMacroDialog": {
+                    "MacroName": "Name des Macros:",
+                    "MacroNameError": "Bitte gib einen Namen ein",
+                    "MacroPageError": "Bitte füge eine Seitenzahl zwischen 1 und 5 ein",
+                    "MacroSlot": "Macro Slot:",
+                    "MacroSlotError": "Bitte füge eine Slotzahl zwischen 0 und 9 ein",
+                    "MacroSlotNumber": "Slot:",
+                    "MacroSlotPage": "Seite:",
+                    "Title": "Füge Macro hinzu"
+                },
+                "AltRollMessage": "Alternative Label-Roll-Nachricht",
+                "AltRollMessageDescription": "Ausgelöst durch Shift + Klick",
+                "FontAwesomeIconDescription": "Du kannst Icon-Namen von 'Font-Awesome' verwenden wie z.B. 'dice-d20' (entdecke Icons auf fontawesome.com)",
+                "Icon": "Label-Icon",
+                "LabelStyle": {
+                    "Boldtext": "Fettgedruckter Text",
+                    "Button": "Button",
+                    "Default": "Standard",
+                    "SectionTitle": "Label-Stil",
+                    "Subtitle": "Untertitel",
+                    "Title": "Titel"
+                },
+                "LabelText": "Label-Text",
+                "Prefix": "Label-Präfix",
+                "RollMessage": "Label-Roll-Nachricht",
+                "SendAltRollMessageToChat": "Sende alternative Roll-Nachricht in den Chat",
+                "SendRollMessageToChat": "Sende Roll-Nachricht in den Chat",
+                "Suffix": "Label-Suffix",
+                "UseRichTextEditorForAltRollMessage": "Nutze einen Rich-Text-Editor für die alternative Roll-Nachricht",
+                "UseRichTextEditorForLabel": "Nutze einen Rich-Text-Editor für das Label",
+                "UseRichTextEditorForRollMessage": "Nutze einen Rich-Text-Editor für die Roll-Nachricht"
+            },
+            "Meter": {
+                "HighValue": "Hoch",
+                "LowValue": "Tief",
+                "Maximum": "Max",
+                "Minimum": "Min",
+                "OptimumValue": "Optimum",
+                "TextDisplay": {
+                    "None": "Nichts",
+                    "SectionTitle": "Text-Anzeige: ",
+                    "Value": "Zeige Wert",
+                    "ValueAndMaximum": "Zeige Wert über dem Maximum",
+                    "ValueAsPercentage": "Zeige Wert in Prozent"
+                },
+                "Value": "Wert"
+            },
+            "MinimumPermission": "Mindest-Berechtigung, um die Komponente zu sehen",
+            "MinimumRole": "Mindest-Rolle, um die Komponente zu sehen",
+            "NumberField": {
+                "AllowDecimal": "Erlaube Dezimalzahlen",
+                "AllowRelativeModification": "Erlaube relative Modifikationen",
+                "AllowRelativeModificationDescription": "Das Eingeben von z.B. '+5' wird 5 zum aktuellen Wert addieren",
+                "ControlStyle": {
+                    "FullControl": "Alle Schaltflächen",
+                    "Hover": "Maus-Hover zum Anzeigen",
+                    "SectionTitle": "Schaltflächen-Stil"
+                },
+                "DisplayStyle": {
+                    "DisplayAsSlider": "Als Slider anzeigen",
+                    "DisplayAsTextField": "Als Text-Feld anzeigen",
+                    "SectionTitle": "Nummern-Feld-Anzeige"
+                },
+                "MaxValue": "Maximalwert",
+                "MinValue": "Mindestwert",
+                "ShowFieldControls": "Zeige Schaltflächen an",
+                "ShowFieldControlsDescription": "Zeige '+' und '-' Buttons an den Seiten an"
+            },
+            "Panel": {
+                "Collapsible": {
+                    "No": "Nein",
+                    "SectionTitle": "Ist das Panel einklappbar?",
+                    "SectionTitleDefault": "Ist das Panel standardmäßig eingeklappt?",
+                    "Yes": "Ja"
+                },
+                "PanelAlign": {
+                    "SectionTitle": "Ausrichtung des Panels"
+                },
+                "PanelLayout": {
+                    "GridOf10": "Grid aus 10 Spalten",
+                    "GridOf11": "Grid aus 11 Spalten",
+                    "GridOf12": "Grid aus 12 Spalten",
+                    "GridOf2": "Grid aus 2 Spalten",
+                    "GridOf3": "Grid aus 3 Spalten",
+                    "GridOf4": "Grid aus 4 Spalten",
+                    "GridOf5": "Grid aus 5 Spalten",
+                    "GridOf6": "Grid aus 6 Spalten",
+                    "GridOf7": "Grid aus 7 Spalten",
+                    "GridOf8": "Grid aus 8 Spalten",
+                    "GridOf9": "Grid aus 9 Spalten",
+                    "Horizontal": "Horizontal",
+                    "SectionTitle": "Layout des Panels",
+                    "Vertical": "Vertikal"
+                },
+                "PanelTitle": "Titel des Panels",
+                "PanelTitleStyle": "Titel-Stil des Panels"
+            },
+            "RadioButton": {
+                "Group": "Gruppe",
+                "GroupDescription": "Wird als Schlüssel in Formeln verwendet",
+                "Value": "Wert"
+            },
+            "Size": {
+                "Auto": "Auto",
+                "Custom": "Custom",
+                "CustomSizeTitle": "Custom size",
+                "Gigantic": "Gigantisch",
+                "Large": "Groß",
+                "Larger": "Größer",
+                "Medium": "Mittel",
+                "SectionTitle": "Größe",
+                "Small": "Klein",
+                "Smaller": "Kleiner",
+                "Tiny": "Winzig"
+            },
+            "Tab": {
+                "Dialog": {
+                    "MissingData": "Name und Schlüssel dürfen nicht leer sein",
+                    "TitleCreate": "Neuer Tab",
+                    "TitleEdit": "Bearbeite Tab {TAB_KEY}"
+                },
+                "EnterNameAndKey": "Bitte gib einen Tab-Namen und -Schlüssel ein.",
+                "MinimumPermission": "Mindest-Berechtigung um den Tab zu sehen",
+                "MinimumRole": "Mindest-Rolle, um den Tab zu sehen",
+                "NameAndKeyDescription": "Name kann alles sein, Schlüssel darf nur aus Kleinbuchstaben bestehen und muss zwischen anderen Tabs einzigartig sein",
+                "TabKey": "Tab-Schlüssel",
+                "TabName": "Tab-Name",
+                "TabTooltip": "Tooltip des Tabs (wird bei Mouseover angezeigt)",
+                "VisibiltyFormulaDescription": "Formel ohne ${}$. Der Tab wird sichtbar sein wenn das Ergebnis der Formel 'true' ist"
+            },
+            "TabbedPanel": {
+                "AddTab": "Füge neuen Tab hinzu",
+                "DeleteTab": "Lösche aktuellen Tab",
+                "EditTab": "Bearbeite aktuellen Tab",
+                "SortTabToLeft": "Bewege Tab nach links",
+                "SortTabToRight": "Bewege Tab nach rechts"
+            },
+            "Table": {
+                "ColCount": "Anzahl Spalten",
+                "RowCount": "Anzahl Zeilen",
+                "TableLayout": "Tabellen-Layout",
+                "TableLayoutDescription": "Du kannst für jede Spalte festlegen, wie sie ausgerichtet sein soll ('l' für links, 'r' für rechts und 'c' für zentriert). Beispiel für eine Tabelle mit 4 Spalten: 'cllr'"
+            },
+            "TextArea": {
+                "Dialog": {
+                    "Title": "Text-Editor"
+                },
+                "Style": {
+                    "DialogEditor": "Dialog-Editor",
+                    "IconOnly": "Nur Icon",
+                    "InSheetEditor": "Im-Bogen-Editor",
+                    "SectionTitle": "Stil"
+                }
+            },
+            "TextField": {
+                "AllowedCharacterList": "Erlaubte Zeichenketten",
+                "AutoComplete": "Formel für Autovervollständigung",
+                "AutoCompleteDescription": "Werte, die in der Autovervollständigung angezeigt werden sollen (komma-separiert). Darf Formeln enthalten",
+                "MaxLength": "Maximallänge"
+            },
+            "Tooltip": "Tooltip der Komponente",
+            "VisibiltyFormula": "Formel für die Sichtbarkeit",
+            "VisibiltyFormulaDescription": "Komponente wird angezeigt, wenn das Ergebnis der Formel 'true' ist.",
+            "WithoutDelimiters": "Ohne Formel-Trennzeichen ${}$"
+        },
+        "Display": {
+            "DefaultHeight": "Standard-Höhe des Bogens",
+            "DefaultWidth": "Standard-Breite des Bogens",
+            "EditDialog": {
+                "DefaultValues": "Standard-Werte",
+                "Title": "Bearbeite Anzeige-Einstellungen"
+            },
+            "PreventSheetResizing": "Verhindere Größenänderungen des Bogens",
+            "ProfilPictureHeight": "Höhe des Profilbildes",
+            "ProfilPictureWidth": "Breite des Profilbildes"
+        },
+        "Export": {
+            "ExportButton": "Exportiere Templates JSON",
+            "ImportButton": "Importiere Templates JSON",
+            "ExportDialog": {
+                "Title": "Wähle Templates aus",
+                "Subtitle": "Wähle die Templates für den Export aus:",
+                "Action": "Exportieren"
+            },
+            "ImportDialog": {
+                "Title": "Import erledigt",
+                "Content": "Import war erfolgreich. Die Applikation wird jetzt neu geladen."
+            }
+        },
+        "Formula": {
+            "Default": "Standard",
+            "ERROR": "FEHLER",
+            "Is": "Ist",
+            "NewValue": "Neuer Wert",
+            "Operator": "Operator",
+            "PREFIXERROR": "PREFIX-FEHLER",
+            "Property": "Eingenschaft",
+            "ReplaceWith": "Ersetzen mit",
+            "Search": "Suchen",
+            "SUFFIXERROR": "SUFFIX-FEHLER",
+            "Target": "Ziel",
+            "Where": "Wo"
+        },
+        "Items": {
+            "EmbeddedItemsFolderDescription": "Dieser Ordner enthält alle eingebetteten Items von Items auf Game-Ebene (also nicht die, die in einem Akteur sind)"
+        },
+        "Modifier": {
+            "Description": "Abst.",
+            "EditDialog": {
+                "MissingData": "Schlüssel und Formel müssen für jeden Modifier hinzugefügt werden",
+                "ModifierCount": "{COUNT} Modifier",
+                "Title": "Konfiguriere Modifier",
+                "DeprecationWarning": "Mit der Version 4.5.0 aufwärts werden Item und Status Effekt Modifiers nicht mehr aktiv entwickelt und mit Version 6.0.0 und Foundry V14 dann endgültig entfernt. Stattdessen sollen Aktive Effekte verwendet werden."
+            },
+            "Formula": "Formel für Wert",
+            "Group": "Gruppe",
+            "ItemModifiers": "Item-Modifier",
+            "Key": "Schlüssel",
+            "Operator": "Op.",
+            "Priority": "Prio.",
+            "TemplateModifiers": "Template-Modifier",
+            "ConversionDialog": {
+                "Text": "<p>Ab Version 4.5.0 werden Item und Statuseffekt-Modifiers zugunsten zu Aktiven Effekten nicht mehr unterstützt und mit Version 6.0.0 und Foundry 14 endgültig entfernt.</p><p>Sollen die Modifiers automatisch zu Aktiven Effekten umgewandelt werden?</p><p><b>Stelle sicher, dass vorher ein Backup erstellt worden ist.</b></p>",
+                "Checkbox": "Zeige dieses Fenster nicht mehr an (es gibt einen Systemparameter, womit man dieses wieder anzeigen kann)",
+                "OpenStatusConfiguration": "Statuseffekt-Modifiers wurden zu Aktiven Effekten umgewandelt. Überprüfe hierbei die Statuseffekt-Konfiguration, um den richtigen Aktiven Effekt mit dem Status zu verknüpfen"
+            },
+            "PassiveModifier": "passiv",
+            "ActiveModifier": "aktiv",
+            "DefaultModifierGroupName": "Modifiers"
+        },
+        "ProgressBar": {
+            "ReloadingTemplates": "CSB: {NAME} ({UUID}) geladen; {CURRENT} / {MAX}",
+            "ReloadingTemplatesFinished": "CSB: Neuladen der Templates von den Dokumenten abgeschlossen; {MAX} Dokumente geladen"
+        },
+        "ReloadTemplates": {
+            "SelectReloadPlacesItems": "Wähle aus, an welchen Stellen du deine Items neuladen möchtest",
+            "SelectReloadPlacesActors": "Wähle aus, an welchen Stellen du deine Akteure neuladen möchtest",
+            "GameDirectory": "Game-Directory",
+            "ActorsInGameDirectory": "Akteure im Game-Directory",
+            "Scenes": "Szenen (Tokens)"
+        },
+        "Settings": {
+            "InitiativeFormula": {
+                "Name": "Initiative-Formel",
+                "Hint": "Gib eine Formel ein ohne '${}$'"
+            },
+            "CustomActiveEffects": {
+                "Name": "Konfiguriere Aktive Effekte",
+                "Hint": "Konfiguriere vordefinierte Aktive Effekte, welche in Entitäten zur Auswahl stehen sollen"
+            },
+            "CustomStatusEffects": {
+                "Name": "Konfiguriere Statuseffekte",
+                "Hint": "Konfiguriere die Icons und das Verhalten der Statuseffekte im Token-HUD",
+                "Id": "Id",
+                "Icon": "Icon",
+                "LinkedActiveEffect": "Verbundene Aktive Effekte",
+                "EffectName": "Name",
+                "StatusEffectInvalid": "Jeder Status Effekt benötigt eine ID, einen Namen und ein Icon",
+                "ResetDialog": {
+                    "Title": "Statuseffekt-Konfiguration zurücksetzen?",
+                    "Content": "Möchtest du wirklich die Statuseffekt-Konfiguration auf die Standardwerte zurücksetzen?"
+                },
+                "SpecialStatusEffectInvalid": "Spezieller Statuseffekt {effect} ist ungültig. Entweder der konfigurierte Statuseffekt existiert nicht oder es wurde keiner konfiguriert.",
+                "SpecialStatusEffects": {
+                    "Title": "Spezielle Statuseffekte",
+                    "Caption": "Diese Effekte werden von FoundryVTT an verschiedenen Stellen benutzt. Stelle sicher, dass diese auf valide Statuseffekte zeigen",
+                    "BLIND": "BLIND",
+                    "BURROW": "EINGEGRABEN",
+                    "DEFEATED": "BESIEGT",
+                    "FLY": "FLIEGEND",
+                    "HOVER": "SCHWEBEND",
+                    "INVISIBLE": "UNSICHTBAR"
+                }
+            },
+            "CustomStyle": {
+                "Name": "CSS-Datei",
+                "Hint": "Du kannst eine CSS-Datei auswählen, die die Standard-Stile überschreiben soll. VORSICHT: Du wirst die Datei nicht im Dateibrowser sehen können, du musst also den Pfad zur Datei manuell eingeben!"
+            },
+            "ExpandRollVisibility": {
+                "Name": "Erweitere geheime Rolls auf gesamte Chat Nachricht",
+                "Hint": "Falls ausgewählt, werden Chat-Nachrichten vollständig versteckt, sollten geheime Würfe stattfinden. Hierfür wird 'Flüstern' verwendet."
+            },
+            "RollIcons": {
+                "Name": "Roll-Icons",
+                "Hint": "Du kannst einen Font-Awesome Icon-Namen auswählen, der neben klickbaren Labels angezeigt werden soll. Beispiel: dice-d20 würde einen d20-Icon anzeigen. Falls leer, wird kein Icon angezeigt."
+            },
+            "ShowHiddenRolls": {
+                "Name": "Zeige versteckte Rolls",
+                "Hint": "Diese Option erlaubt es, dass der SL versteckte Rolls sieht."
+            },
+            "LoggingLevel": {
+                "Name": "System-Logging-Level",
+                "Hint": "Dies setzt das systemweite Mindest-Log-Level. Bei größeren Systeme kann das Level 'Debug' zu Verzögerungen im Interface führen.",
+                "Levels": {
+                    "None": "Kein Logging",
+                    "Error": "Nur Fehler",
+                    "Warn": "Warnungen und alles darüber",
+                    "Info": "Info und alles darüber",
+                    "Log": "Logge alles außer Debug",
+                    "Debug": "Loge alles"
+                }
+            },
+            "MinimumRoleEditModifiers": {
+                "Name": "Mindest-Rolle zum Bearbeiten von Item-Modifier",
+                "Hint": "Mindest-Rolle, um Item-Modifier zu sehen und zu bearbeiten"
+            },
+            "MinimumRoleTemplateReload": {
+                "Name": "Mindest-Rolle zum Neuladen von Bögen",
+                "Hint": "Mindest-Rolle, um ein Template auszuwählen und den Bogen neu zu laden."
+            },
+            "ManualEntitySaving": {
+                "Name": "Manuelle Speicherung der Entität",
+                "Hint": "Bei großen Sheets könnte es Sinn machen, automatische Updates zu deaktivieren, wenn der Vorgang zu lange dauert. Hierbei wird ein Speichern-Button zur Verfügung gestellt, mit dem man Änderungen manuell speichern kann. Automatische Updates werden aber dennoch ausgelöst, wenn ein Item hinzugefügt, gespeichert oder gelöscht wird oder wenn der Bogen geschlossen wird."
+            },
+            "DocumentationButton": "Zeige Systemdokumentation",
+            "Show451ConversionPopUp": {
+                "Name": "Zeige Fenster für Umwandlung von Modifiers zu Aktiven Effekten"
+            }
+        },
+        "Sheets": {
+            "ConfigureItemModifier": "Konfiguriere Item-Modifier",
+            "InvalidSheet": "Ungültiger Bogen",
+            "MakeItemUnique": "Mach Item einzigartig",
+            "OpenTemplateSheet": "Öffne Bogen vom Template",
+            "ReloadTemplate": "Lade Template neu",
+            "SeeAttributeBars": "Zeige Attributleisten",
+            "SeeHiddenAttributes": "Zeige versteckte Attribute",
+            "Template": "Template"
+        },
+        "TemplateActions": {
+            "AddNewElement": "Neues Element hinzufügen",
+            "ConfigureStatusEffects": "Konfiguriere Statuseffekte",
+            "ConfigureAttributeBars": "Konfiguriere Attributleisten",
+            "ConfigureHiddenAttributes": "Konfiguriere versteckte Attribute",
+            "ConfigureSheetDisplay": "Konfiguriere Anzeige des Bogens",
+            "Redo": "Wiederholen",
+            "ReloadCharacterSheets": "Lade alle Charakterbögen neu",
+            "ReloadItemSheet": "Lade all Items neu",
+            "ReloadSheetsDialog": {
+                "Contents": "Willst du wirklich alle Charakterbögen, die mit diesem Template verbunden sind, neu laden?",
+                "Title": "Alle verbundenen Bögen neu laden?"
+            },
+            "Undo": "Rückgängig machen"
+        },
+        "UserInput": {
+            "Value": "Wert",
+            "Variable": "Variable"
+        },
+        "UserMessages": {
+            "CannotMoveItemInItself": "Es ist nicht möglich, ein Item in sich selbst zu ziehen",
+            "Dropdown": {
+                "OptionsLengthError": "{COMPONENT_KEY}: Schlüssel und Label-Optionen haben nicht dieselbe Länge."
+            },
+            "EmbeddedItemsFolderNotFound": "Ordner für eingebettete Items nicht gefunden. Bitte erstelle einen Order für Items mit dem Namen {EMBEDDED_ITEMS_FOLDER_NAME}",
+            "ItemMaxDepth": "Items können nicht mehr als ${depth} Ebenen tief verschachtelt werden.",
+            "ItemTemplateDeleted": "Item Template für das Item {ITEM_NAME} - {ITEM_UUID}, welches für {ENTITY_NAME} - {ENTITY_UUID} verwendet wird, wurde gelöscht.",
+            "Label": {
+                "ChatCommandeCreationError": "Konnte Chat-Kommando nicht erstellen."
+            },
+            "NumberField": {
+                "ValueNotInteger": "Wert muss ein Integer sein",
+                "ValueNotNumeric": "Wert muss numerisch sein",
+                "ValueNotTooHigh": "Wert muss kleiner sein als {VALUE}",
+                "ValueNotTooLow": "Wert muss größer sein als {VALUE}"
+            },
+            "TabbedPanel": {
+                "DuplicateTabKeEdit": "Konnte Tab nicht bearbeiten, Duplikat im Schlüssel : {KEY}",
+                "DuplicateTabKey": "Konnte Tab nicht erstellen, Duplikat im Schlüssel : {KEY}"
+            },
+            "TextField": {
+                "WrongValue": "Wert enthält unerlaubte Zeichen"
+            },
+            "UserInputTemplateNotFound": "Nutzer-Eingabe-Template {TEMPLATE_NAME} nicht gefunden.",
+            "WrongDragOnTemplate": "Nur Sub-Templates können zum Template gezogen werden"
+        }
+    },
+    "TYPES": {
+        "Actor": {
+            "_template": "Template",
+            "character": "Charakter"
+        },
+        "Item": {
+            "_equippableItemTemplate": "Item Template",
+            "equippableItem": "Item",
+            "subTemplate": "Subtemplate",
+            "userInputTemplate": "Nutzer-Eingabe-Template"
+        }
+    }
+}

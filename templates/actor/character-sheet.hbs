@@ -1,0 +1,241 @@
+<form class="hunter sheet actor character">
+    <header class="sheet-header">
+        <div class="header-left">
+            <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" alt="{{actor.name}}" />
+            <h1><input name="name" type="text" value="{{actor.name}}" placeholder="角色名称" /></h1>
+        </div>
+        <div class="header-resources">
+            <div class="resource-bar">
+                <label>灵识</label>
+                <input type="number" name="system.resources.consciousness.value" value="{{system.resources.consciousness.value}}" min="0" max="{{system.resources.consciousness.max}}" />
+                <span>/</span>
+                <input type="number" name="system.resources.consciousness.max" value="{{system.resources.consciousness.max}}" min="1" />
+            </div>
+        </div>
+    </header>
+
+    <div class="sheet-body">
+        <div class="tab-container">
+            <nav class="sheet-tabs tabs" data-group="primary">
+                <a class="item active" data-tab="main">主要</a>
+                <a class="item" data-tab="combat">战斗</a>
+                <a class="item" data-tab="background">背景</a>
+                <a class="item" data-tab="items">物品</a>
+            </nav>
+
+            <div class="tab-content">
+                <!-- 主要标签页 -->
+                <div class="tab active" data-tab="main">
+                    <div class="main-grid">
+                        <!-- 基础属性 -->
+                        <section class="attributes">
+                            <h3>基础属性</h3>
+                            <div class="attr-grid">
+                                <div class="attribute">
+                                    <label>体魄</label>
+                                    <input type="number" name="system.attributes.physique.value" value="{{system.attributes.physique.value}}" min="1" max="10" />
+                                </div>
+                                <div class="attribute">
+                                    <label>智慧</label>
+                                    <input type="number" name="system.attributes.intellect.value" value="{{system.attributes.intellect.value}}" min="1" max="10" />
+                                </div>
+                                <div class="attribute">
+                                    <label>心魂</label>
+                                    <input type="number" name="system.attributes.spirit.value" value="{{system.attributes.spirit.value}}" min="1" max="10" />
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- 基础资源 -->
+                        <section class="resources">
+                            <h3>基础资源</h3>
+                            <div class="resource-grid">
+                                <div class="resource">
+                                    <label>生命值</label>
+                                    <div class="resource-bar">
+                                        <input type="number" name="system.resources.hp.value" value="{{system.resources.hp.value}}" min="0" max="{{system.resources.hp.max}}" />
+                                        <span>/</span>
+                                        <input type="number" name="system.resources.hp.max" value="{{system.resources.hp.max}}" min="1" />
+                                    </div>
+                                </div>
+                                <div class="resource">
+                                    <label>灵力值</label>
+                                    <div class="resource-bar">
+                                        <input type="number" name="system.resources.mp.value" value="{{system.resources.mp.value}}" min="0" max="{{system.resources.mp.max}}" />
+                                        <span>/</span>
+                                        <input type="number" name="system.resources.mp.max" value="{{system.resources.mp.max}}" min="0" />
+                                    </div>
+                                </div>
+                                <div class="resource">
+                                    <label>时髦值</label>
+                                    <div class="resource-bar">
+                                        <input type="number" name="system.resources.style.value" value="{{system.resources.style.value}}" min="0" max="{{system.resources.style.max}}" />
+                                        <span>/</span>
+                                        <input type="number" name="system.resources.style.max" value="{{system.resources.style.max}}" min="1" />
+                                    </div>
+                                </div>
+                                <div class="resource">
+                                    <label>道具点</label>
+                                    <input type="number" name="system.resources.items.value" value="{{system.resources.items.value}}" min="0" />
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- 技能 -->
+                        <section class="skills">
+                            <h3>技能</h3>
+                            <div class="skills-grid">
+                                {{#each system.skills as |skill name|}}
+                                <div class="skill-row">
+                                    <label>{{skill.label}}</label>
+                                    <input type="number" name="system.skills.{{name}}.value" value="{{skill.value}}" min="0" max="10" />
+                                    <button type="button" class="roll-button" data-action="roll" data-skill="{{name}}">
+                                        <i class="fas fa-dice-d20"></i>
+                                    </button>
+                                </div>
+                                {{/each}}
+                            </div>
+                        </section>
+
+                        <!-- 灵能力 -->
+                        <section class="powers">
+                            <h3>灵能力</h3>
+                            <div class="power-form">
+                                <div class="form-row">
+                                    <label>名称</label>
+                                    <input type="text" name="system.power.name" value="{{system.power.name}}" placeholder="灵能力名称" />
+                                </div>
+                                <div class="form-row">
+                                    <label>专精标签</label>
+                                    <input type="text" name="system.power.tags" value="{{system.power.tags}}" placeholder="标签1, 标签2" />
+                                </div>
+                                <div class="form-row">
+                                    <label>消耗</label>
+                                    <input type="text" name="system.power.consumption" value="{{system.power.consumption}}" placeholder="消耗说明" />
+                                </div>
+                                <div class="form-row">
+                                    <label>加骰</label>
+                                    <input type="text" name="system.power.bonus" value="{{system.power.bonus}}" placeholder="加骰条件" />
+                                </div>
+                                <div class="form-row">
+                                    <label>弱点触发</label>
+                                    <input type="text" name="system.power.weakness" value="{{system.power.weakness}}" placeholder="弱点条件" />
+                                </div>
+                                <div class="form-row">
+                                    <label>描述</label>
+                                    <textarea name="system.power.description" rows="3" placeholder="详细描述">{{system.power.description}}</textarea>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <!-- 战斗标签页 -->
+                <div class="tab" data-tab="combat">
+                    <div class="combat-grid">
+                        <!-- 战斗数值 -->
+                        <section class="combat-stats">
+                            <h3>战斗数值</h3>
+                            <div class="combat-values">
+                                <div class="combat-value">
+                                    <label>防御值</label>
+                                    <input type="number" name="system.combat.defense.value" value="{{system.combat.defense.value}}" min="0" />
+                                </div>
+                                <div class="combat-value">
+                                    <label>术法强度</label>
+                                    <input type="number" name="system.combat.spellpower.value" value="{{system.combat.spellpower.value}}" min="0" />
+                                </div>
+                                <div class="combat-value">
+                                    <label>武艺强度</label>
+                                    <input type="number" name="system.combat.martialpower.value" value="{{system.combat.martialpower.value}}" min="0" />
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- 成长系统 -->
+                        <section class="growth">
+                            <h3>成长系统</h3>
+                            <div class="growth-values">
+                                <div class="growth-value">
+                                    <label>经验值</label>
+                                    <input type="number" name="system.growth.experience.value" value="{{system.growth.experience.value}}" min="0" />
+                                </div>
+                                <div class="growth-value">
+                                    <label>灵识提升次数</label>
+                                    <input type="number" name="system.growth.consciousnessUpgrade.available" value="{{system.growth.consciousnessUpgrade.available}}" min="0" />
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <!-- 背景标签页 -->
+                <div class="tab" data-tab="background">
+                    <section class="background">
+                        <h3>角色背景</h3>
+                        <div class="background-form">
+                            <div class="form-row">
+                                <label>羁绊</label>
+                                <textarea name="system.background.bonds.value" rows="3" placeholder="描述角色的重要羁绊">{{system.background.bonds.value}}</textarea>
+                            </div>
+                            <div class="form-row">
+                                <label>故事经历</label>
+                                <textarea name="system.background.story.value" rows="4" placeholder="角色的过往经历">{{system.background.story.value}}</textarea>
+                            </div>
+                            <div class="form-row">
+                                <label>团队关系</label>
+                                <textarea name="system.background.teamRelation.value" rows="3" placeholder="与团队成员的关系">{{system.background.teamRelation.value}}</textarea>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- 物品标签页 -->
+                <div class="tab" data-tab="items">
+                    <section class="items">
+                        <h3>物品清单</h3>
+                        <div class="items-header">
+                            <button type="button" class="item-create" data-type="martial">
+                                <i class="fas fa-sword"></i> 武技
+                            </button>
+                            <button type="button" class="item-create" data-type="spell">
+                                <i class="fas fa-magic"></i> 术法
+                            </button>
+                            <button type="button" class="item-create" data-type="talent">
+                                <i class="fas fa-star"></i> 专长
+                            </button>
+                            <button type="button" class="item-create" data-type="soulweapon">
+                                <i class="fas fa-gem"></i> 灵魂武器
+                            </button>
+                            <button type="button" class="item-create" data-type="consumable">
+                                <i class="fas fa-flask"></i> 道具
+                            </button>
+                            <button type="button" class="item-create" data-type="ultimate">
+                                <i class="fas fa-crown"></i> 绝技
+                            </button>
+                        </div>
+                        <div class="items-list">
+                            {{#each actor.items as |item|}}
+                            <div class="item-entry" data-item-id="{{item.id}}">
+                                <div class="item-name">
+                                    <img src="{{item.img}}" alt="{{item.name}}" />
+                                    <span>{{item.name}}</span>
+                                    <span class="item-type">({{item.type}})</span>
+                                </div>
+                                <div class="item-controls">
+                                    <button type="button" class="item-edit" data-item-id="{{item.id}}">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button type="button" class="item-delete" data-item-id="{{item.id}}">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            {{/each}}
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
