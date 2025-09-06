@@ -36,7 +36,8 @@
         "Combat": {
             "Defense": "防御值",
             "SpellPower": "术法强度",
-            "MartialPower": "武艺强度"
+            "MartialPower": "武艺强度",
+            "SoulPower": "灵能力强度"
         },
         
         "Growth": {
@@ -186,7 +187,8 @@
             "SkillCheck": "技能检定",
             "AttributeCheck": "属性检定",
             "Damage": "伤害",
-            "UsedItem": "使用了物品"
+            "UsedItem": "使用了物品",
+            "StyleGained": "时髦值获得"
         },
         
         "Tab": {

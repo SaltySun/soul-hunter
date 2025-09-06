@@ -26,8 +26,8 @@
         }
     ],
     "packs": [],
-    "manifest": "",
-    "download": "",
+    "manifest": "https://github.com/SaltySun/soul-hunter/releases/download/0.2.0/system.json",
+    "download": "https://github.com/SaltySun/soul-hunter/releases/download/0.2.0/system.json",
     "grid": {
         "distance": 1,
         "units": "m",

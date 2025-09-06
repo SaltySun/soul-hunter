@@ -69,9 +69,9 @@
                                 <div class="resource">
                                     <label>时髦值</label>
                                     <div class="resource-bar">
-                                        <input type="number" name="system.resources.style.value" value="{{system.resources.style.value}}" min="0" max="{{system.resources.style.max}}" />
+                                        <input type="number" name="system.resources.style.value" value="{{system.resources.style.value}}" min="0" max="100" />
                                         <span>/</span>
-                                        <input type="number" name="system.resources.style.max" value="{{system.resources.style.max}}" min="1" />
+                                        <span class="max-value">100</span>
                                     </div>
                                 </div>
                                 <div class="resource">
@@ -143,11 +143,18 @@
                                 </div>
                                 <div class="combat-value">
                                     <label>术法强度</label>
-                                    <input type="number" name="system.combat.spellpower.value" value="{{system.combat.spellpower.value}}" min="0" />
+                                    <span class="calculated-value">{{combatValues.spellPower}}</span>
+                                    <small>(智慧{{system.attributes.intellect.value}}的一半)</small>
                                 </div>
                                 <div class="combat-value">
                                     <label>武艺强度</label>
-                                    <input type="number" name="system.combat.martialpower.value" value="{{system.combat.martialpower.value}}" min="0" />
+                                    <span class="calculated-value">{{combatValues.martialPower}}</span>
+                                    <small>(运动{{system.skills.athletics.value}}的一半)</small>
+                                </div>
+                                <div class="combat-value">
+                                    <label>灵能力强度</label>
+                                    <span class="calculated-value">{{combatValues.soulPower}}</span>
+                                    <small>(心魄{{system.attributes.spirit.value}}的一半)</small>
                                 </div>
                             </div>
                         </section>

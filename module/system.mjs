@@ -17,12 +17,35 @@ class HunterActorSheet extends ActorSheet {
         // 准备技能数据，包含属性关联
         data.skills = {};
         for (let [key, skill] of Object.entries(this.actor.system.skills || {})) {
+            const attributeValue = this.actor.system.attributes[skill.attribute]?.value || 3;
             data.skills[key] = {
                 ...skill,
-                attributeValue: this.actor.system.attributes[skill.attribute]?.value || 3,
-                modifier: Math.floor((this.actor.system.attributes[skill.attribute]?.value || 3) / 2) - 1
+                attributeValue: attributeValue,
+                attributeDice: `${attributeValue}d4`
             };
         }
+        
+        // 计算战斗数值
+        const physiqueValue = this.actor.system.attributes.physique.value;
+        const intellectValue = this.actor.system.attributes.intellect.value;
+        const spiritValue = this.actor.system.attributes.spirit.value;
+        
+        // 武艺强度基础为运动一半向下取整
+        const athleticsValue = this.actor.system.skills.athletics.value;
+        const martialPowerBase = Math.floor(athleticsValue / 2);
+        
+        // 术法强度为智慧的一半
+        const spellPowerBase = Math.floor(intellectValue / 2);
+        
+        // 零能力强度为心魄的一半
+        const soulPowerBase = Math.floor(spiritValue / 2);
+        
+        // 更新战斗数值显示
+        data.combatValues = {
+            martialPower: martialPowerBase,
+            spellPower: spellPowerBase,
+            soulPower: soulPowerBase
+        };
         
         return data;
     }
@@ -47,39 +70,104 @@ class HunterActorSheet extends ActorSheet {
         const skill = event.currentTarget.dataset.skill;
         const skillData = this.actor.system.skills[skill];
         const attributeValue = this.actor.system.attributes[skillData.attribute].value;
-        const modifier = Math.floor(attributeValue / 2) - 1;
         
-        // 构建掷骰公式：1d20 + 属性修正 + 技能等级
-        const rollFormula = `1d20 + ${modifier} + ${skillData.value}`;
+        // 根据新规则计算属性加成
+        let attributeBonus = "";
+        let attributeDescription = "";
         
-        // 检查时髦值加骰
-        const styleValue = this.actor.system.resources.style.value;
-        let styleDice = "";
-        if (styleValue > 0) {
-            const useStyle = await Dialog.confirm({
-                title: "使用时髦值",
-                content: `<p>是否消耗1点时髦值获得额外1d6加骰？</p><p>当前时髦值：${styleValue}</p>`,
-                defaultYes: false
-            });
-            
-            if (useStyle) {
-                styleDice = " + 1d6";
-                await this.actor.update({"system.resources.style.value": Math.max(0, styleValue - 1)});
+        if (skill === "athletics") {
+            // 运动：体魄等级一半的D4向下取整
+            const physiqueValue = this.actor.system.attributes.physique.value;
+            const bonusDice = Math.floor(physiqueValue / 2);
+            if (bonusDice > 0) {
+                attributeBonus = ` + ${bonusDice}d4`;
+                attributeDescription = `(体魄${physiqueValue}，加成${bonusDice}d4)`;
             }
+        } else if (skill === "operation" || skill === "stealth" || skill === "investigation") {
+            // 操作、隐秘、调查：智慧的一半
+            const intellectValue = this.actor.system.attributes.intellect.value;
+            const bonusDice = Math.floor(intellectValue / 2);
+            if (bonusDice > 0) {
+                attributeBonus = ` + ${bonusDice}d4`;
+                attributeDescription = `(智慧${intellectValue}，加成${bonusDice}d4)`;
+            }
+        } else if (skill === "insight" || skill === "persuasion") {
+            // 洞察、说服：心魄的一半
+            const spiritValue = this.actor.system.attributes.spirit.value;
+            const bonusDice = Math.floor(spiritValue / 2);
+            if (bonusDice > 0) {
+                attributeBonus = ` + ${bonusDice}d4`;
+                attributeDescription = `(心魄${spiritValue}，加成${bonusDice}d4)`;
+            }
+        }
+        
+        // 构建基础掷骰公式：1d20 + 技能等级 + 属性加成
+        const rollFormula = `1d20 + ${skillData.value}${attributeBonus}`;
+        
+        // 时髦值等级选择弹窗
+        const currentStyleValue = this.actor.system.resources.style.value;
+        let styleDice = "";
+        let styleLevel = 0;
+        
+        const styleChoice = await Dialog.wait({
+            title: "时髦值等级选择",
+            content: `
+                <div class="style-choice">
+                    <p>请选择本次检定的时髦等级：</p>
+                    <p>当前时髦值：${currentStyleValue}/100</p>
+                </div>
+            `,
+            buttons: {
+                none: {
+                    label: "不使用时髦值",
+                    callback: () => 0
+                },
+                level1: {
+                    label: "等级1 (+1d6)",
+                    callback: () => 1
+                },
+                level2: {
+                    label: "等级2 (+2d6)",
+                    callback: () => 2
+                },
+                level3: {
+                    label: "等级3 (+3d6)",
+                    callback: () => 3
+                }
+            }
+        });
+        
+        styleLevel = styleChoice || 0;
+        
+        if (styleLevel > 0) {
+            styleDice = ` + ${styleLevel}d6`;
         }
         
         const finalFormula = rollFormula + styleDice;
         const roll = await new Roll(finalFormula).roll();
         
+        // 如果使用了时髦值，计算时髦值骰子的结果并添加到角色卡
+        let styleGained = 0;
+        if (styleLevel > 0) {
+            // 从掷骰结果中提取时髦值骰子的结果
+            const styleRoll = await new Roll(`${styleLevel}d6`).roll();
+            styleGained = styleRoll.total;
+            
+            // 更新角色卡的时髦值（不超过100）
+            const newStyleValue = Math.min(100, currentStyleValue + styleGained);
+            await this.actor.update({"system.resources.style.value": newStyleValue});
+        }
+        
         const messageData = {
             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-            flavor: `${skillData.label} 检定 (${skillData.attribute}: ${attributeValue})`,
+            flavor: `${skillData.label} 检定 ${attributeDescription}`,
             rolls: [roll],
             content: `<div class="dice-roll">
                 <div class="dice-result">
                     <div class="dice-formula">${finalFormula}</div>
                     <div class="dice-total">${roll.total}</div>
                 </div>
+                ${styleGained > 0 ? `<div class="style-gained">时髦值获得：+${styleGained}</div>` : ''}
             </div>`
         };
         
