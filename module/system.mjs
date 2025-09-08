@@ -5,7 +5,7 @@ class HunterActorSheet extends ActorSheet {
             classes: ["soul-hunter", "sheet", "actor"],
             template: "systems/soul-hunter/templates/actor/character-sheet.hbs",
             width: 700,
-            height: 800,
+            height: 900,
             tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".tab-content", initial: "main" }]
         });
     }
@@ -30,9 +30,8 @@ class HunterActorSheet extends ActorSheet {
         const intellectValue = this.actor.system.attributes.intellect.value;
         const spiritValue = this.actor.system.attributes.spirit.value;
         
-        // 武艺强度基础为运动一半向下取整
-        const athleticsValue = this.actor.system.skills.athletics.value;
-        const martialPowerBase = Math.floor(athleticsValue / 2);
+        // 武艺强度基础为体魄一半向下取整
+        const martialPowerBase = Math.floor(physiqueValue / 2);
         
         // 术法强度为智慧的一半
         const spellPowerBase = Math.floor(intellectValue / 2);
@@ -47,6 +46,17 @@ class HunterActorSheet extends ActorSheet {
             soulPower: soulPowerBase
         };
         
+        // 如果战斗数值未设置，使用计算值初始化
+        if (this.actor.system.combat.martialpower.value === 0) {
+            await this.actor.update({"system.combat.martialpower.value": martialPowerBase});
+        }
+        if (this.actor.system.combat.spellpower.value === 0) {
+            await this.actor.update({"system.combat.spellpower.value": spellPowerBase});
+        }
+        if (this.actor.system.combat.soulpower.value === 0) {
+            await this.actor.update({"system.combat.soulpower.value": soulPowerBase});
+        }
+        
         return data;
     }
 
@@ -55,6 +65,11 @@ class HunterActorSheet extends ActorSheet {
         
         // 技能掷骰
         html.find("[data-action=roll]").on("click", this._onSkillRoll.bind(this));
+        // 时髦动作
+        html.find(".style-action").on("click", this._onStyleAction.bind(this));
+        
+        // 重置战斗数值
+        html.find(".reset-combat-values").on("click", this._onResetCombatValues.bind(this));
         
         // 物品管理
         html.find(".item-create").on("click", this._onItemCreate.bind(this));
@@ -63,6 +78,89 @@ class HunterActorSheet extends ActorSheet {
         
         // 资源管理
         html.find(".resource-bar input").on("change", this._onResourceChange.bind(this));
+    }
+
+    async _onStyleAction(event) {
+        event.preventDefault();
+        const current = this.actor.system.resources.style.value || 0;
+        const actions = [
+            { key: "awakening", label: "超灵觉醒", cost: 30 },
+            { key: "finale", label: "英雄谢幕", cost: 15 },
+            { key: "tenacity", label: "坚毅", cost: 15 },
+            { key: "flashback", label: "闪回", cost: 15 },
+            { key: "reroll", label: "重投", cost: 15 },
+            { key: "powerful", label: "强力", cost: 10 }
+        ];
+        
+        const content = `
+            <div class="style-choice">
+                <p>当前时髦值：${current}/100</p>
+                <div class="style-options">
+                    ${actions.map(a => `<button type="button" data-key="${a.key}" ${current < a.cost ? 'disabled' : ''}>${a.label}（消耗 ${a.cost}）</button>`).join("")}
+                </div>
+            </div>
+        `;
+        
+        let selected = null;
+        await Dialog.wait({
+            title: "使用时髦动作",
+            content,
+            buttons: {
+                cancel: { label: "取消", callback: () => null }
+            },
+            render: (html) => {
+                html.find(".style-options button").on("click", (ev) => {
+                    const key = ev.currentTarget.dataset.key;
+                    selected = actions.find(a => a.key === key);
+                    // 触发关闭
+                    html.find("button:contains('取消')").click();
+                });
+            }
+        });
+        
+        if (!selected) return;
+        if (current < selected.cost) {
+            ui.notifications.warn("时髦值不足");
+            return;
+        }
+        // 扣减
+        await this.actor.update({ "system.resources.style.value": Math.max(0, current - selected.cost) });
+        
+        // 发布聊天信息
+        ChatMessage.create({
+            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+            content: `<div class="hunter-dice-roll">
+                <div class="dice-header">
+                    <div class="dice-formula">时髦动作：${selected.label}</div>
+                </div>
+                <div class="dice-result">
+                    <div class="dice-total">-${selected.cost}</div>
+                    <div class="success-level success">已使用</div>
+                </div>
+            </div>`
+        });
+    }
+
+    async _onResetCombatValues(event) {
+        event.preventDefault();
+        
+        // 重新计算战斗数值
+        const physiqueValue = this.actor.system.attributes.physique.value;
+        const intellectValue = this.actor.system.attributes.intellect.value;
+        const spiritValue = this.actor.system.attributes.spirit.value;
+        
+        const martialPowerBase = Math.floor(physiqueValue / 2);
+        const spellPowerBase = Math.floor(intellectValue / 2);
+        const soulPowerBase = Math.floor(spiritValue / 2);
+        
+        // 更新战斗数值
+        await this.actor.update({
+            "system.combat.martialpower.value": martialPowerBase,
+            "system.combat.spellpower.value": spellPowerBase,
+            "system.combat.soulpower.value": soulPowerBase
+        });
+        
+        ui.notifications.info("战斗数值已重置为计算值");
     }
 
     async _onSkillRoll(event) {
@@ -158,14 +256,52 @@ class HunterActorSheet extends ActorSheet {
             await this.actor.update({"system.resources.style.value": newStyleValue});
         }
         
+        // 计算成功等级
+        const successLevel = Math.floor((roll.total - 10) / 5);
+        const successText = successLevel > 0 ? `成功等级 ${successLevel}` : roll.total >= 10 ? "成功" : "失败";
+        
         const messageData = {
             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
             flavor: `${skillData.label} 检定 ${attributeDescription}`,
             rolls: [roll],
-            content: `<div class="dice-roll">
-                <div class="dice-result">
+            content: `<div class="hunter-dice-roll">
+                <div class="dice-header">
                     <div class="dice-formula">${finalFormula}</div>
+                </div>
+                <div class="dice-result">
                     <div class="dice-total">${roll.total}</div>
+                    <div class="success-level ${roll.total >= 10 ? 'success' : 'failure'}">${successText}</div>
+                </div>
+                <div class="dice-details" style="display: none;">
+                    <div class="dice-breakdown">
+                        <div class="breakdown-item">
+                            <span class="label">基础检定:</span>
+                            <span class="value">1d20 + ${skillData.value}${attributeBonus}</span>
+                        </div>
+                        ${styleLevel > 0 ? `
+                        <div class="breakdown-item">
+                            <span class="label">时髦值等级${styleLevel}:</span>
+                            <span class="value">+${styleLevel}d6</span>
+                        </div>
+                        ` : ''}
+                    </div>
+                    <div class="dice-results">
+                        <div class="result-item">
+                            <span class="label">主骰:</span>
+                            <span class="value">${roll.dice[0].results.map(r => r.result).join(', ')}</span>
+                        </div>
+                        ${styleLevel > 0 ? `
+                        <div class="result-item">
+                            <span class="label">时髦骰:</span>
+                            <span class="value">${roll.dice[1] ? roll.dice[1].results.map(r => r.result).join(', ') : ''}</span>
+                        </div>
+                        ` : ''}
+                    </div>
+                </div>
+                <div class="dice-toggle">
+                    <button type="button" class="toggle-details">
+                        <i class="fas fa-chevron-down"></i> 查看详情
+                    </button>
                 </div>
                 ${styleGained > 0 ? `<div class="style-gained">时髦值获得：+${styleGained}</div>` : ''}
             </div>`
@@ -415,7 +551,23 @@ Hooks.once("ready", async function () {
 
 // 聊天消息钩子，用于处理特殊掷骰
 Hooks.on("renderChatMessage", (message, html, data) => {
-    // 可以在这里添加聊天消息的特殊处理
+    // 处理掷骰详情的展开/收起
+    html.find(".toggle-details").on("click", (event) => {
+        event.preventDefault();
+        const button = event.currentTarget;
+        const details = button.closest(".hunter-dice-roll").querySelector(".dice-details");
+        const icon = button.querySelector("i");
+        
+        if (details.style.display === "none") {
+            details.style.display = "block";
+            icon.className = "fas fa-chevron-up";
+            button.innerHTML = '<i class="fas fa-chevron-up"></i> 收起详情';
+        } else {
+            details.style.display = "none";
+            icon.className = "fas fa-chevron-down";
+            button.innerHTML = '<i class="fas fa-chevron-down"></i> 查看详情';
+        }
+    });
 });
 
 // 导出类供其他模块使用

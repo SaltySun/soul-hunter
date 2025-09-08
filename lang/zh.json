@@ -188,7 +188,16 @@
             "AttributeCheck": "属性检定",
             "Damage": "伤害",
             "UsedItem": "使用了物品",
-            "StyleGained": "时髦值获得"
+            "StyleGained": "时髦值获得",
+            "Success": "成功",
+            "Failure": "失败",
+            "SuccessLevel": "成功等级",
+            "ViewDetails": "查看详情",
+            "HideDetails": "收起详情",
+            "BaseCheck": "基础检定",
+            "StyleLevel": "时髦值等级",
+            "MainDice": "主骰",
+            "StyleDice": "时髦骰"
         },
         
         "Tab": {
