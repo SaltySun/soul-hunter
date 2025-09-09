@@ -6,63 +6,39 @@
 
     <div class="sheet-body">
         <div class="form-group">
-            <label>描述</label>
-            <textarea name="system.description" rows="3" placeholder="武技的详细描述">{{system.description}}</textarea>
+            <label>消耗灵力值</label>
+            <input type="number" name="system.mp_cost" value="{{system.mp_cost}}" min="0" placeholder="消耗的灵力值" />
+        </div>
+
+        <div class="form-group">
+            <label>目标</label>
+            <select name="system.target">
+                <option value="single" {{#if (eq system.target "single")}}selected{{/if}}>单一</option>
+                <option value="scene" {{#if (eq system.target "scene")}}selected{{/if}}>场景</option>
+                <option value="any" {{#if (eq system.target "any")}}selected{{/if}}>任意</option>
+            </select>
         </div>
 
         <div class="form-row">
             <div class="form-group">
-                <label>消耗类型</label>
-                <select name="system.consumption.type">
-                    <option value="none" {{#if (eq system.consumption.type "none")}}selected{{/if}}>无消耗</option>
-                    <option value="mp" {{#if (eq system.consumption.type "mp")}}selected{{/if}}>灵力</option>
-                    <option value="style" {{#if (eq system.consumption.type "style")}}selected{{/if}}>时髦值</option>
-                    <option value="hp" {{#if (eq system.consumption.type "hp")}}selected{{/if}}>生命值</option>
-                </select>
+                <label>是否为强化</label>
+                <input type="checkbox" name="system.is_enhanced" {{#if system.is_enhanced}}checked{{/if}} />
             </div>
             <div class="form-group">
-                <label>消耗数值</label>
-                <input type="number" name="system.consumption.value" value="{{system.consumption.value}}" min="0" />
-            </div>
-        </div>
-
-        <div class="form-row">
-            <div class="form-group">
-                <label>目标类型</label>
-                <select name="system.target.type">
-                    <option value="single" {{#if (eq system.target.type "single")}}selected{{/if}}>单体</option>
-                    <option value="area" {{#if (eq system.target.type "area")}}selected{{/if}}>范围</option>
-                    <option value="self" {{#if (eq system.target.type "self")}}selected{{/if}}>自身</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>攻击距离</label>
-                <select name="system.target.range">
-                    <option value="melee" {{#if (eq system.target.range "melee")}}selected{{/if}}>近战</option>
-                    <option value="ranged" {{#if (eq system.target.range "ranged")}}selected{{/if}}>远程</option>
-                    <option value="touch" {{#if (eq system.target.range "touch")}}selected{{/if}}>接触</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="form-row">
-            <div class="form-group">
-                <label>伤害公式</label>
-                <input type="text" name="system.damage.formula" value="{{system.damage.formula}}" placeholder="1d6+2" />
-            </div>
-            <div class="form-group">
-                <label>伤害类型</label>
-                <select name="system.damage.type">
-                    <option value="physical" {{#if (eq system.damage.type "physical")}}selected{{/if}}>物理</option>
-                    <option value="spiritual" {{#if (eq system.damage.type "spiritual")}}selected{{/if}}>精神</option>
-                    <option value="special" {{#if (eq system.damage.type "special")}}selected{{/if}}>特殊</option>
-                </select>
+                <label>是否为秘传</label>
+                <input type="checkbox" name="system.is_secret" {{#if system.is_secret}}checked{{/if}} />
             </div>
         </div>
 
         <div class="form-group">
-            <label>特殊效果</label>
-            <textarea name="system.effects.special" rows="3" placeholder="特殊效果描述">{{system.effects.special}}</textarea>
+            <label>效果</label>
+            <textarea name="system.effects" rows="4" placeholder="武技的效果描述">{{system.effects}}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>描述</label>
+            <textarea name="system.description" rows="6" placeholder="武技的详细描述">{{system.description}}</textarea>
         </div>
     </div>
 </form>
+

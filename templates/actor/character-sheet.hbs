@@ -132,28 +132,22 @@
                                 </div>
                                 <div class="form-row">
                                     <label>专精标签</label>
-                                    <input type="text" name="system.power.tags" value="{{system.power.tags}}"
-                                        placeholder="标签1, 标签2" />
-                                </div>
-                                <div class="form-row">
-                                    <label>消耗</label>
-                                    <input type="text" name="system.power.consumption"
-                                        value="{{system.power.consumption}}" placeholder="消耗说明" />
-                                </div>
-                                <div class="form-row">
-                                    <label>加骰</label>
-                                    <input type="text" name="system.power.bonus" value="{{system.power.bonus}}"
-                                        placeholder="加骰条件" />
-                                </div>
-                                <div class="form-row">
-                                    <label>弱点触发</label>
-                                    <input type="text" name="system.power.weakness" value="{{system.power.weakness}}"
-                                        placeholder="弱点条件" />
+                                    <div class="power-tags">
+                                        {{#each (split system.power.tags ",") as |t|}}
+                                        {{#if t}}
+                                        <span class="power-tag" data-tag="{{trim t}}" title="右键删除">{{trim t}}</span>
+                                        {{/if}}
+                                        {{/each}}
+                                        <button type="button" class="power-tag-add" title="添加标签"><i class="fas fa-plus"></i> 添加标签</button>
+                                    </div>
                                 </div>
                                 <div class="form-row">
                                     <label>描述</label>
                                     <textarea name="system.power.description" rows="3"
                                         placeholder="详细描述">{{system.power.description}}</textarea>
+                                </div>
+                                <div class="form-row">
+                                    <button type="button" class="use-power"><i class="fas fa-dice-d20"></i> 使用灵能力</button>
                                 </div>
                             </div>
                         </section>
@@ -243,23 +237,8 @@
                     <section class="items">
                         <h3>物品清单</h3>
                         <div class="items-header">
-                            <button type="button" class="item-create" data-type="martial">
-                                <i class="fas fa-sword"></i> 武技
-                            </button>
-                            <button type="button" class="item-create" data-type="spell">
-                                <i class="fas fa-magic"></i> 术法
-                            </button>
-                            <button type="button" class="item-create" data-type="talent">
-                                <i class="fas fa-star"></i> 专长
-                            </button>
-                            <button type="button" class="item-create" data-type="soulweapon">
-                                <i class="fas fa-gem"></i> 灵魂武器
-                            </button>
-                            <button type="button" class="item-create" data-type="consumable">
-                                <i class="fas fa-flask"></i> 道具
-                            </button>
-                            <button type="button" class="item-create" data-type="ultimate">
-                                <i class="fas fa-crown"></i> 绝技
+                            <button type="button" class="item-create-popup" title="添加物品">
+                                <i class="fas fa-plus"></i> 添加物品
                             </button>
                         </div>
                         <div class="items-list">
@@ -287,3 +266,41 @@
         </div>
     </div>
 </form>
+
+<!-- 物品类型选择弹窗 -->
+<div id="item-type-popup" class="popup-overlay" style="display: none;">
+    <div class="popup-content">
+        <div class="popup-header">
+            <h3>选择物品类型</h3>
+            <button type="button" class="popup-close">&times;</button>
+        </div>
+        <div class="popup-body">
+            <div class="item-type-grid">
+                <button type="button" class="item-type-option" data-type="talent">
+                    <i class="fas fa-star"></i>
+                    <span>专长</span>
+                </button>
+                <button type="button" class="item-type-option" data-type="martial">
+                    <i class="fas fa-sword"></i>
+                    <span>武技</span>
+                </button>
+                <button type="button" class="item-type-option" data-type="spell">
+                    <i class="fas fa-magic"></i>
+                    <span>术法</span>
+                </button>
+                <button type="button" class="item-type-option" data-type="soulweapon">
+                    <i class="fas fa-gem"></i>
+                    <span>灵魂武器</span>
+                </button>
+                <button type="button" class="item-type-option" data-type="ultimate">
+                    <i class="fas fa-crown"></i>
+                    <span>绝技</span>
+                </button>
+                <button type="button" class="item-type-option" data-type="consumable">
+                    <i class="fas fa-flask"></i>
+                    <span>道具</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

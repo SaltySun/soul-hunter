@@ -135,39 +135,27 @@
             }
         },
         "npc": {
+            "level": "",
+            "creature_type": "",
+            "hp": 10,
+            "mp": 10,
             "attributes": {
-                "physique": {
-                    "value": 3
-                },
-                "intellect": {
-                    "value": 3
-                },
-                "spirit": {
-                    "value": 3
-                }
+                "body": 3,
+                "wisdom": 3,
+                "soul": 3
             },
-            "resources": {
-                "hp": {
-                    "value": 10,
-                    "max": 10
-                },
-                "mp": {
-                    "value": 10,
-                    "max": 10
-                }
+            "defense": 10,
+            "damage_resistance": "",
+            "danger_level": {
+                "tag": "",
+                "value": 0
             },
-            "combat": {
-                "defense": {
-                    "value": 10
-                },
-                "spellpower": {
-                    "value": 0
-                },
-                "martialpower": {
-                    "value": 0
-                }
+            "actions": [],
+            "domain": {
+                "tags": ""
             },
-            "description": ""
+            "description": "",
+            "lore_note": ""
         },
         "monster": {
             "attributes": {
@@ -212,108 +200,37 @@
             "ultimate"
         ],
         "martial": {
-            "consumption": {
-                "type": "none",
-                "value": 0
-            },
-            "target": {
-                "type": "single",
-                "range": "melee"
-            },
-            "damage": {
-                "formula": "1d6",
-                "type": "physical"
-            },
-            "effects": {
-                "special": ""
-            },
+            "mp_cost": 0,
+            "target": "single",
+            "is_enhanced": false,
+            "is_secret": false,
+            "effects": "",
             "description": ""
         },
         "spell": {
-            "casting": {
-                "method": "gesture",
-                "time": "action"
-            },
-            "consumption": {
-                "mp": 1,
-                "other": ""
-            },
-            "duration": {
-                "type": "instant",
-                "value": 0
-            },
-            "target": {
-                "type": "single",
-                "range": "touch"
-            },
-            "effects": {
-                "formula": "",
-                "type": "utility",
-                "special": ""
-            },
+            "mp_cost": 0,
+            "target": "single",
+            "type": "",
+            "is_secret": false,
+            "attribute_check": "wisdom",
+            "effects": "",
             "description": ""
         },
         "talent": {
-            "type": "passive",
-            "trigger": {
-                "condition": "",
-                "frequency": "always"
-            },
-            "restriction": {
-                "scene": "",
-                "other": ""
-            },
-            "effects": {
-                "passive": "",
-                "active": ""
-            },
             "description": ""
         },
         "soulweapon": {
-            "name": "",
-            "form": {
-                "mark": "",
-                "description": ""
-            },
-            "soul": {
-                "mark": "",
-                "power": ""
-            },
-            "appearance": "",
-            "abilities": "",
-            "description": ""
+            "form_mark": "",
+            "soul_mark": "",
+            "appearance": ""
         },
         "consumable": {
-            "type": "talisman",
-            "quantity": {
-                "value": 1,
-                "max": 1
-            },
-            "effects": {
-                "immediate": "",
-                "duration": 0
-            },
-            "cost": {
-                "items": 0,
-                "spirit": 0
-            },
             "description": ""
         },
         "ultimate": {
-            "type": "martial",
-            "requirements": {
-                "level": 1,
-                "conditions": ""
-            },
-            "consumption": {
-                "mp": 0,
-                "style": 0,
-                "other": ""
-            },
-            "power": {
-                "formula": "",
-                "effects": ""
-            },
+            "type": "",
+            "soul": "",
+            "effects": "",
             "description": ""
         }
     }

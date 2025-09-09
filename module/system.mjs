@@ -72,10 +72,21 @@ class HunterActorSheet extends ActorSheet {
         html.find(".reset-combat-values").on("click", this._onResetCombatValues.bind(this));
         
         // 物品管理
-        html.find(".item-create").on("click", this._onItemCreate.bind(this));
+        html.find(".item-create-popup").on("click", this._onItemCreatePopup.bind(this));
         html.find(".item-edit").on("click", this._onItemEdit.bind(this));
         html.find(".item-delete").on("click", this._onItemDelete.bind(this));
+        // 物品图片发送到聊天
+        html.find(".items-list .item-entry .item-name img").on("click", this._onItemImageToChat.bind(this));
         
+        // 弹窗管理
+        html.find(".popup-close").on("click", this._onPopupClose.bind(this));
+        html.find(".item-type-option").on("click", this._onItemTypeSelect.bind(this));
+        
+        // 灵能力标签与使用
+        html.find(".power-tag-add").on("click", this._onPowerTagAdd.bind(this));
+        html.find(".power-tag").on("contextmenu", this._onPowerTagRemove.bind(this));
+        html.find(".use-power").on("click", this._onUsePower.bind(this));
+
         // 资源管理
         html.find(".resource-bar input").on("change", this._onResourceChange.bind(this));
     }
@@ -167,147 +178,214 @@ class HunterActorSheet extends ActorSheet {
         event.preventDefault();
         const skill = event.currentTarget.dataset.skill;
         const skillData = this.actor.system.skills[skill];
-        const attributeValue = this.actor.system.attributes[skillData.attribute].value;
-        
-        // 根据新规则计算属性加成
-        let attributeBonus = "";
+        if (!skillData) return;
+
+        // 每个技能等级 +1d4（不再平加等级）
+        const skillLevel = Number(skillData.value) || 0;
+        const skillDice = skillLevel > 0 ? `${skillLevel}d4` : "";
+
+        // 属性加成为对应主属性的一半个d4（向下取整）
+        const attrKey = skillData.attribute;
         let attributeDescription = "";
-        
-        if (skill === "athletics") {
-            // 运动：体魄等级一半的D4向下取整
-            const physiqueValue = this.actor.system.attributes.physique.value;
-            const bonusDice = Math.floor(physiqueValue / 2);
-            if (bonusDice > 0) {
-                attributeBonus = ` + ${bonusDice}d4`;
-                attributeDescription = `(体魄${physiqueValue}，加成${bonusDice}d4)`;
-            }
-        } else if (skill === "operation" || skill === "stealth" || skill === "investigation") {
-            // 操作、隐秘、调查：智慧的一半
-            const intellectValue = this.actor.system.attributes.intellect.value;
-            const bonusDice = Math.floor(intellectValue / 2);
-            if (bonusDice > 0) {
-                attributeBonus = ` + ${bonusDice}d4`;
-                attributeDescription = `(智慧${intellectValue}，加成${bonusDice}d4)`;
-            }
-        } else if (skill === "insight" || skill === "persuasion") {
-            // 洞察、说服：心魄的一半
-            const spiritValue = this.actor.system.attributes.spirit.value;
-            const bonusDice = Math.floor(spiritValue / 2);
-            if (bonusDice > 0) {
-                attributeBonus = ` + ${bonusDice}d4`;
-                attributeDescription = `(心魄${spiritValue}，加成${bonusDice}d4)`;
+        let attributeDice = "";
+        if (attrKey && this.actor.system.attributes[attrKey]) {
+            const val = Number(this.actor.system.attributes[attrKey].value) || 0;
+            const bonusCount = Math.floor(val / 2);
+            if (bonusCount > 0) {
+                attributeDice = `${bonusCount}d4`;
+                const label = CONFIG.HunterSouls?.attributes?.[attrKey]?.label || attrKey;
+                attributeDescription = `（${label}${val}，+${bonusCount}d4）`;
             }
         }
-        
-        // 构建基础掷骰公式：1d20 + 技能等级 + 属性加成
-        const rollFormula = `1d20 + ${skillData.value}${attributeBonus}`;
-        
-        // 时髦值等级选择弹窗
-        const currentStyleValue = this.actor.system.resources.style.value;
-        let styleDice = "";
-        let styleLevel = 0;
-        
-        const styleChoice = await Dialog.wait({
+
+        const parts = ["1d20", skillDice, attributeDice].filter(Boolean);
+        const baseRoll = await new Roll(parts.join(" + ")).roll();
+
+        // 时髦值等级选择（只加骰不增减资源）
+        const currentStyleValue = this.actor.system.resources.style.value || 0;
+        const styleLevel = await Dialog.wait({
             title: "时髦值等级选择",
-            content: `
-                <div class="style-choice">
-                    <p>请选择本次检定的时髦等级：</p>
-                    <p>当前时髦值：${currentStyleValue}/100</p>
-                </div>
-            `,
+            content: `<div class="style-choice"><p>当前时髦值：${currentStyleValue}/100</p></div>`,
             buttons: {
-                none: {
-                    label: "不使用时髦值",
-                    callback: () => 0
-                },
-                level1: {
-                    label: "等级1 (+1d6)",
-                    callback: () => 1
-                },
-                level2: {
-                    label: "等级2 (+2d6)",
-                    callback: () => 2
-                },
-                level3: {
-                    label: "等级3 (+3d6)",
-                    callback: () => 3
-                }
+                none: { label: "不使用时髦值", callback: () => 0 },
+                level1: { label: "等级1 (+1d6)", callback: () => 1 },
+                level2: { label: "等级2 (+2d6)", callback: () => 2 },
+                level3: { label: "等级3 (+3d6)", callback: () => 3 }
             }
-        });
-        
-        styleLevel = styleChoice || 0;
-        
-        if (styleLevel > 0) {
-            styleDice = ` + ${styleLevel}d6`;
+        }) || 0;
+
+        const styleRoll = styleLevel > 0 ? await new Roll(`${styleLevel}d6`).roll() : null;
+        // 使用时髦值自动累计
+        if (styleRoll) {
+            const currStyle = Number(this.actor.system.resources.style.value) || 0;
+            const newStyle = Math.min(100, currStyle + styleRoll.total);
+            await this.actor.update({ "system.resources.style.value": newStyle });
         }
-        
-        const finalFormula = rollFormula + styleDice;
-        const roll = await new Roll(finalFormula).roll();
-        
-        // 如果使用了时髦值，计算时髦值骰子的结果并添加到角色卡
-        let styleGained = 0;
-        if (styleLevel > 0) {
-            // 从掷骰结果中提取时髦值骰子的结果
-            const styleRoll = await new Roll(`${styleLevel}d6`).roll();
-            styleGained = styleRoll.total;
-            
-            // 更新角色卡的时髦值（不超过100）
-            const newStyleValue = Math.min(100, currentStyleValue + styleGained);
-            await this.actor.update({"system.resources.style.value": newStyleValue});
-        }
-        
-        // 计算成功等级
-        const successLevel = Math.floor((roll.total - 10) / 5);
-        const successText = successLevel > 0 ? `成功等级 ${successLevel}` : roll.total >= 10 ? "成功" : "失败";
-        
+        const total = baseRoll.total + (styleRoll ? styleRoll.total : 0);
+
+        const successLevel = Math.floor((total - 10) / 5);
+        const successText = successLevel > 0 ? `成功等级 ${successLevel}` : total >= 10 ? "成功" : "失败";
+
         const messageData = {
             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
             flavor: `${skillData.label} 检定 ${attributeDescription}`,
-            rolls: [roll],
+            rolls: [baseRoll].concat(styleRoll ? [styleRoll] : []),
             content: `<div class="hunter-dice-roll">
                 <div class="dice-header">
-                    <div class="dice-formula">${finalFormula}</div>
+                    <div class="dice-formula">${parts.join(" + ")}${styleRoll ? ` + ${styleLevel}d6` : ""}</div>
                 </div>
-                <div class="dice-result">
-                    <div class="dice-total">${roll.total}</div>
-                    <div class="success-level ${roll.total >= 10 ? 'success' : 'failure'}">${successText}</div>
+                <div class="dice-total-result">
+                    <div class="dice-total">${total}</div>
+                    <div class="success-level ${total >= 10 ? 'success' : 'failure'}">${successText}</div>
                 </div>
-                <div class="dice-details" style="display: none;">
-                    <div class="dice-breakdown">
-                        <div class="breakdown-item">
-                            <span class="label">基础检定:</span>
-                            <span class="value">1d20 + ${skillData.value}${attributeBonus}</span>
-                        </div>
-                        ${styleLevel > 0 ? `
-                        <div class="breakdown-item">
-                            <span class="label">时髦值等级${styleLevel}:</span>
-                            <span class="value">+${styleLevel}d6</span>
-                        </div>
-                        ` : ''}
-                    </div>
-                    <div class="dice-results">
-                        <div class="result-item">
-                            <span class="label">主骰:</span>
-                            <span class="value">${roll.dice[0].results.map(r => r.result).join(', ')}</span>
-                        </div>
-                        ${styleLevel > 0 ? `
-                        <div class="result-item">
-                            <span class="label">时髦骰:</span>
-                            <span class="value">${roll.dice[1] ? roll.dice[1].results.map(r => r.result).join(', ') : ''}</span>
-                        </div>
-                        ` : ''}
-                    </div>
-                </div>
-                <div class="dice-toggle">
-                    <button type="button" class="toggle-details">
-                        <i class="fas fa-chevron-down"></i> 查看详情
-                    </button>
-                </div>
-                ${styleGained > 0 ? `<div class="style-gained">时髦值获得：+${styleGained}</div>` : ''}
+                <details class="dice-collapsible"><summary>查看骰子详情</summary>
+                    <div class="dice-details">${await baseRoll.render()}${styleRoll ? await styleRoll.render() : ''}</div>
+                </details>
             </div>`
         };
-        
+
         ChatMessage.create(messageData);
+    }
+
+    async _onItemImageToChat(event) {
+        event.preventDefault();
+        const itemId = event.currentTarget.closest('.item-entry')?.dataset.itemId;
+        const item = this.actor.items.get(itemId);
+        if (!item) return;
+        const system = item.system || {};
+        const desc = typeof system.description === 'string' ? system.description : '';
+        const content = `<div class="hunter-item-post">
+            <div class="item-header"><img src="${item.img}" style="width:28px;height:28px;border:1px solid #666;margin-right:6px;vertical-align:middle;"/> <strong>${item.name}</strong> <em>(${item.type})</em></div>
+            ${desc ? `<div class="item-body">${desc}</div>` : ''}
+        </div>`;
+        ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this.actor }), content });
+    }
+
+    async _onPowerTagAdd(event) {
+        event.preventDefault();
+        const current = this.actor.system.power?.tags || "";
+        let tag = null;
+        await new Promise((resolve)=>{
+            new Dialog({
+                title: "添加专精标签",
+                content: `<p>输入标签：</p><input type="text" id="power-tag-input"/>`,
+                buttons: {
+                    ok: { label: "添加", callback: (html)=>{ tag = html.find('#power-tag-input').val(); resolve(); }},
+                    cancel: { label: "取消", callback: ()=>resolve() }
+                }
+            }).render(true);
+        });
+        if (!tag) return;
+        const tags = current ? current.split(',').map(t=>t.trim()).filter(Boolean) : [];
+        if (!tags.includes(tag)) tags.push(tag);
+        await this.actor.update({ 'system.power.tags': tags.join(', ') });
+        this.render(true);
+    }
+
+    async _onPowerTagRemove(event) {
+        event.preventDefault();
+        const tag = event.currentTarget.dataset.tag;
+        const current = this.actor.system.power?.tags || "";
+        const tags = current ? current.split(',').map(t=>t.trim()).filter(Boolean) : [];
+        const idx = tags.indexOf(tag);
+        if (idx < 0) return;
+        const yes = await Dialog.confirm({ title: '删除标签', content: `<p>确认删除标签：<strong>${tag}</strong>？</p>` });
+        if (!yes) return;
+        tags.splice(idx,1);
+        await this.actor.update({ 'system.power.tags': tags.join(', ') });
+        this.render(true);
+    }
+
+    async _onUsePower(event) {
+        event.preventDefault();
+        const power = this.actor.system.power || {};
+        const rawTags = (power.tags || '').split(',').map(t=>t.trim()).filter(Boolean);
+        let selected = [];
+        await Dialog.wait({
+            title: '使用灵能力 - 选择标签',
+            content: `<div class="tag-select">${rawTags.map(t=>`<button type=\"button\" class=\"tag-btn\" data-tag=\"${t}\">${t}</button>`).join('')}</div>`,
+            buttons: { ok: { label: '确定', callback: ()=>true }, cancel: { label: '取消', callback: ()=>false } },
+            render: (html)=>{
+                html.find('.tag-btn').on('click', (ev)=>{
+                    const t = ev.currentTarget.dataset.tag;
+                    if (!selected.includes(t)) selected.push(t);
+                    ev.currentTarget.classList.add('active');
+                });
+            }
+        });
+
+        const currentStyleValue = this.actor.system.resources.style.value || 0;
+        const styleLevel = await Dialog.wait({
+            title: '时髦值等级选择',
+            content: `<p>当前时髦值：${currentStyleValue}/100</p>`,
+            buttons: {
+                none: { label: '不使用', callback: ()=>0 },
+                l1: { label: '等级1 (+1d6)', callback: ()=>1 },
+                l2: { label: '等级2 (+2d6)', callback: ()=>2 },
+                l3: { label: '等级3 (+3d6)', callback: ()=>3 }
+            }
+        }) || 0;
+
+        const tagDiceCount = selected.length;
+        const baseRoll = await new Roll(`1d20${tagDiceCount>0?` + ${tagDiceCount}d4`:''}`).roll();
+        const styleRoll = styleLevel>0 ? await new Roll(`${styleLevel}d6`).roll() : null;
+        // 灵能力使用后自动消耗灵力值：每确认一个标签 -1 MP
+        if (tagDiceCount > 0) {
+            const currMP = Number(this.actor.system.resources.mp.value) || 0;
+            const newMP = Math.max(0, currMP - tagDiceCount);
+            await this.actor.update({ "system.resources.mp.value": newMP });
+        }
+        // 使用时髦值自动累计
+        if (styleRoll) {
+            const currStyle = Number(this.actor.system.resources.style.value) || 0;
+            const newStyle = Math.min(100, currStyle + styleRoll.total);
+            await this.actor.update({ "system.resources.style.value": newStyle });
+        }
+        const total = baseRoll.total + (styleRoll?styleRoll.total:0);
+        const successLevel = Math.floor((total - 10) / 5);
+        const successText = successLevel > 0 ? `成功等级 ${successLevel}` : total >= 10 ? "成功" : "失败";
+
+        const messageData = {
+            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+            flavor: `使用灵能力：${power.name || ''}（标签：${selected.join(', ') || '无'}）`,
+            rolls: [baseRoll].concat(styleRoll?[styleRoll]:[]),
+            content: `<div class=\"hunter-dice-roll\">\n                <div class=\"dice-header\"><div class=\"dice-formula\">1d20${tagDiceCount>0?` + ${tagDiceCount}d4`:''}${styleRoll?` + ${styleLevel}d6`:''}</div></div>\n                <div class=\"dice-result\"><div class=\"dice-total\">${total}</div><div class=\"success-level ${total>=10?'success':'failure'}\">${successText}</div></div>\n                <details class=\"dice-collapsible\"><summary>查看骰子详情</summary>${await baseRoll.render()}${styleRoll?await styleRoll.render():''}</details>\n                <div class=\"note\">本次使用了 ${tagDiceCount} 个标签，已消耗 ${tagDiceCount} 点灵力值；时髦值已自动累计。</div>\n            </div>`
+        };
+        ChatMessage.create(messageData);
+    }
+
+    _onItemCreatePopup(event) {
+        event.preventDefault();
+        const popup = document.getElementById('item-type-popup');
+        if (popup) {
+            popup.style.display = 'flex';
+        }
+    }
+
+    _onPopupClose(event) {
+        event.preventDefault();
+        const popup = document.getElementById('item-type-popup');
+        if (popup) {
+            popup.style.display = 'none';
+        }
+    }
+
+    async _onItemTypeSelect(event) {
+        event.preventDefault();
+        const type = event.currentTarget.dataset.type;
+        const popup = document.getElementById('item-type-popup');
+        if (popup) {
+            popup.style.display = 'none';
+        }
+        
+        const itemData = {
+            name: `新${this._getItemTypeName(type)}`,
+            type: type,
+            system: {}
+        };
+        
+        const item = await Item.create(itemData, { parent: this.actor });
+        item.sheet.render(true);
     }
 
     async _onItemCreate(event) {
@@ -401,6 +479,9 @@ class HunterItemSheet extends ItemSheet {
         if (this.item.type === "martial" || this.item.type === "spell") {
             html.find(".use-item").on("click", this._onUseItem.bind(this));
         }
+
+        // 点击物品图片将物品内容发送到聊天
+        html.find(".item-img").on("click", this._onPostToChat.bind(this));
     }
 
     async _onUseItem(event) {
@@ -436,6 +517,17 @@ class HunterItemSheet extends ItemSheet {
         
         ChatMessage.create(messageData);
     }
+
+    async _onPostToChat(event) {
+        event.preventDefault();
+        const system = this.item.system || {};
+        const desc = typeof system.description === 'string' ? system.description : '';
+        const content = `<div class="hunter-item-post">
+            <div class="item-header"><img src="${this.item.img}" style="width:28px;height:28px;border:1px solid #666;margin-right:6px;vertical-align:middle;"/> <strong>${this.item.name}</strong> <em>(${this.item.type})</em></div>
+            ${desc ? `<div class=\"item-body\">${desc}</div>` : ''}
+        </div>`;
+        ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this.item.parent }), content });
+    }
 }
 
 // NPC Sheet
@@ -445,7 +537,7 @@ class HunterNPCSheet extends ActorSheet {
             classes: ["soul-hunter", "sheet", "actor", "npc"],
             template: "systems/soul-hunter/templates/actor/npc-sheet.hbs",
             width: 500,
-            height: 600
+            height: 820
         });
     }
 
@@ -509,6 +601,18 @@ Hooks.once("init", async function () {
         }
     };
     
+    // Handlebars 助手
+    if (typeof Handlebars !== 'undefined') {
+        Handlebars.registerHelper('split', function(str, sep){
+            if (!str) return [];
+            return String(str).split(sep);
+        });
+        Handlebars.registerHelper('trim', function(str){
+            if (!str) return '';
+            return String(str).trim();
+        });
+    }
+
     // 加载模板
     await loadTemplates([
         "systems/soul-hunter/templates/actor/character-sheet.hbs",

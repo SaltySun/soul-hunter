@@ -7,56 +7,7 @@
     <div class="sheet-body">
         <div class="form-group">
             <label>描述</label>
-            <textarea name="system.description" rows="3" placeholder="专长的详细描述">{{system.description}}</textarea>
-        </div>
-
-        <div class="form-row">
-            <div class="form-group">
-                <label>专长类型</label>
-                <select name="system.type">
-                    <option value="passive" {{#if (eq system.type "passive")}}selected{{/if}}>被动</option>
-                    <option value="active" {{#if (eq system.type "active")}}selected{{/if}}>主动</option>
-                    <option value="reaction" {{#if (eq system.type "reaction")}}selected{{/if}}>反应</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="form-row">
-            <div class="form-group">
-                <label>触发条件</label>
-                <input type="text" name="system.trigger.condition" value="{{system.trigger.condition}}" placeholder="触发条件描述" />
-            </div>
-            <div class="form-group">
-                <label>使用频率</label>
-                <select name="system.trigger.frequency">
-                    <option value="always" {{#if (eq system.trigger.frequency "always")}}selected{{/if}}>总是</option>
-                    <option value="once_per_turn" {{#if (eq system.trigger.frequency "once_per_turn")}}selected{{/if}}>每回合一次</option>
-                    <option value="once_per_scene" {{#if (eq system.trigger.frequency "once_per_scene")}}selected{{/if}}>每场景一次</option>
-                    <option value="once_per_session" {{#if (eq system.trigger.frequency "once_per_session")}}selected{{/if}}>每次游戏一次</option>
-                    <option value="limited" {{#if (eq system.trigger.frequency "limited")}}selected{{/if}}>有限次数</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="form-row">
-            <div class="form-group">
-                <label>场景限制</label>
-                <input type="text" name="system.restriction.scene" value="{{system.restriction.scene}}" placeholder="适用场景限制" />
-            </div>
-            <div class="form-group">
-                <label>其他限制</label>
-                <input type="text" name="system.restriction.other" value="{{system.restriction.other}}" placeholder="其他使用限制" />
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label>被动效果</label>
-            <textarea name="system.effects.passive" rows="3" placeholder="被动效果描述">{{system.effects.passive}}</textarea>
-        </div>
-
-        <div class="form-group">
-            <label>主动效果</label>
-            <textarea name="system.effects.active" rows="3" placeholder="主动效果描述">{{system.effects.active}}</textarea>
+            <textarea name="system.description" rows="6" placeholder="专长的详细描述">{{system.description}}</textarea>
         </div>
     </div>
 </form>

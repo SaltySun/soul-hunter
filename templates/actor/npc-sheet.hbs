@@ -1,26 +1,39 @@
 <form class="hunter sheet actor npc">
     <header class="sheet-header">
         <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" alt="{{actor.name}}" />
-        <h1><input name="name" type="text" value="{{actor.name}}" placeholder="NPC名称" /></h1>
+        <h1><input name="name" type="text" value="{{actor.name}}" placeholder="角色名称" /></h1>
     </header>
 
     <div class="sheet-body">
         <div class="npc-grid">
+            <!-- 基础信息 -->
+            <section class="basic-info">
+                <h3>基础信息</h3>
+                <div class="form-group">
+                    <label>角色等级/类别</label>
+                    <input type="text" name="system.level" value="{{system.level}}" placeholder="角色等级或类别" />
+                </div>
+                <div class="form-group">
+                    <label>生物类型</label>
+                    <input type="text" name="system.creature_type" value="{{system.creature_type}}" placeholder="生物类型" />
+                </div>
+            </section>
+
             <!-- 基础属性 -->
             <section class="attributes">
                 <h3>基础属性</h3>
                 <div class="attr-grid">
                     <div class="attribute">
                         <label>体魄</label>
-                        <input type="number" name="system.attributes.physique.value" value="{{system.attributes.physique.value}}" min="1" max="10" />
+                        <input type="number" name="system.attributes.body" value="{{system.attributes.body}}" min="1" max="10" />
                     </div>
                     <div class="attribute">
                         <label>智慧</label>
-                        <input type="number" name="system.attributes.intellect.value" value="{{system.attributes.intellect.value}}" min="1" max="10" />
+                        <input type="number" name="system.attributes.wisdom" value="{{system.attributes.wisdom}}" min="1" max="10" />
                     </div>
                     <div class="attribute">
                         <label>心魂</label>
-                        <input type="number" name="system.attributes.spirit.value" value="{{system.attributes.spirit.value}}" min="1" max="10" />
+                        <input type="number" name="system.attributes.soul" value="{{system.attributes.soul}}" min="1" max="10" />
                     </div>
                 </div>
             </section>
@@ -31,19 +44,11 @@
                 <div class="resource-grid">
                     <div class="resource">
                         <label>生命值</label>
-                        <div class="resource-bar">
-                            <input type="number" name="system.resources.hp.value" value="{{system.resources.hp.value}}" min="0" max="{{system.resources.hp.max}}" />
-                            <span>/</span>
-                            <input type="number" name="system.resources.hp.max" value="{{system.resources.hp.max}}" min="1" />
-                        </div>
+                        <input type="number" name="system.hp" value="{{system.hp}}" min="0" />
                     </div>
                     <div class="resource">
                         <label>灵力值</label>
-                        <div class="resource-bar">
-                            <input type="number" name="system.resources.mp.value" value="{{system.resources.mp.value}}" min="0" max="{{system.resources.mp.max}}" />
-                            <span>/</span>
-                            <input type="number" name="system.resources.mp.max" value="{{system.resources.mp.max}}" min="0" />
-                        </div>
+                        <input type="number" name="system.mp" value="{{system.mp}}" min="0" />
                     </div>
                 </div>
             </section>
@@ -53,24 +58,62 @@
                 <h3>战斗数值</h3>
                 <div class="combat-values">
                     <div class="combat-value">
-                        <label>防御值</label>
-                        <input type="number" name="system.combat.defense.value" value="{{system.combat.defense.value}}" min="0" />
+                        <label>基础防御</label>
+                        <input type="number" name="system.defense" value="{{system.defense}}" min="0" />
                     </div>
                     <div class="combat-value">
-                        <label>术法强度</label>
-                        <input type="number" name="system.combat.spellpower.value" value="{{system.combat.spellpower.value}}" min="0" />
+                        <label>伤害抗性</label>
+                        <input type="text" name="system.damage_resistance" value="{{system.damage_resistance}}" placeholder="伤害抗性，用逗号分隔" />
                     </div>
-                    <div class="combat-value">
-                        <label>武艺强度</label>
-                        <input type="number" name="system.combat.martialpower.value" value="{{system.combat.martialpower.value}}" min="0" />
+                </div>
+            </section>
+
+            <!-- 危险等级 -->
+            <section class="danger-level">
+                <h3>危险等级</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>等级标签</label>
+                        <input type="text" name="system.danger_level.tag" value="{{system.danger_level.tag}}" placeholder="危险等级标签" />
                     </div>
+                    <div class="form-group">
+                        <label>等级数值</label>
+                        <input type="number" name="system.danger_level.value" value="{{system.danger_level.value}}" min="0" />
+                    </div>
+                </div>
+            </section>
+
+            <!-- 领域能力 -->
+            <section class="domain">
+                <h3>领域能力</h3>
+                <div class="form-group">
+                    <label>领域标签</label>
+                    <input type="text" name="system.domain.tags" value="{{system.domain.tags}}" placeholder="领域标签，用逗号分隔" />
                 </div>
             </section>
 
             <!-- 描述 -->
             <section class="description">
-                <h3>描述</h3>
-                <textarea name="system.description" rows="6" placeholder="NPC的详细描述">{{system.description}}</textarea>
+                <h3>角色背景简介</h3>
+                <textarea name="system.description" rows="4" placeholder="角色的背景简介">{{system.description}}</textarea>
+            </section>
+
+            <!-- 传说 -->
+            <section class="lore">
+                <h3>传说</h3>
+                <textarea name="system.lore_note" rows="4" placeholder="关于这个角色的传说">{{system.lore_note}}</textarea>
+            </section>
+
+            <!-- 行动 -->
+            <section class="actions">
+                <h3>行动</h3>
+                <div class="actions-list">
+                    {{#each system.actions as |action|}}
+                    <div class="action-entry">
+                        <span>{{action.name}}</span>
+                    </div>
+                    {{/each}}
+                </div>
             </section>
         </div>
     </div>
