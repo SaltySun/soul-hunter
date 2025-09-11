@@ -131,14 +131,15 @@
                                         placeholder="灵能力名称" />
                                 </div>
                                 <div class="form-row">
-                                    <label>专精标签</label>
+                                    <label>灵能力标签</label>
                                     <div class="power-tags">
                                         {{#each (split system.power.tags ",") as |t|}}
                                         {{#if t}}
                                         <span class="power-tag" data-tag="{{trim t}}" title="右键删除">{{trim t}}</span>
                                         {{/if}}
                                         {{/each}}
-                                        <button type="button" class="power-tag-add" title="添加标签"><i class="fas fa-plus"></i> 添加标签</button>
+                                        <button type="button" class="power-tag-add" title="添加标签"><i
+                                                class="fas fa-plus"></i> 添加标签</button>
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -147,7 +148,14 @@
                                         placeholder="详细描述">{{system.power.description}}</textarea>
                                 </div>
                                 <div class="form-row">
-                                    <button type="button" class="use-power"><i class="fas fa-dice-d20"></i> 使用灵能力</button>
+                                    <button type="button" class="use-power"><i class="fas fa-dice-d20"></i>
+                                        使用灵能力</button>
+                                    <button type="button" class="use-martial" title="使用武技">
+                                        <i class="fas fa-fist-raised"></i> 使用武技
+                                    </button>
+                                    <button type="button" class="use-spell" title="使用术法">
+                                        <i class="fas fa-hat-wizard"></i> 使用术法
+                                    </button>
                                 </div>
                             </div>
                         </section>
@@ -173,18 +181,24 @@
                                 </div>
                                 <div class="combat-value">
                                     <label>术法强度</label>
-                                    <input type="number" name="system.combat.spellpower.value" value="{{system.combat.spellpower.value}}" min="0" />
-                                    <small>基础: {{combatValues.spellPower}} (智慧{{system.attributes.intellect.value}}的一半)</small>
+                                    <input type="number" name="system.combat.spellpower.value"
+                                        value="{{system.combat.spellpower.value}}" min="0" />
+                                    <small>基础: {{combatValues.spellPower}}
+                                        (智慧{{system.attributes.intellect.value}}的一半)</small>
                                 </div>
                                 <div class="combat-value">
                                     <label>武艺强度</label>
-                                    <input type="number" name="system.combat.martialpower.value" value="{{system.combat.martialpower.value}}" min="0" />
-                                    <small>基础: {{combatValues.martialPower}} (体魄{{system.attributes.physique.value}}的一半)</small>
+                                    <input type="number" name="system.combat.martialpower.value"
+                                        value="{{system.combat.martialpower.value}}" min="0" />
+                                    <small>基础: {{combatValues.martialPower}}
+                                        (体魄{{system.attributes.physique.value}}的一半)</small>
                                 </div>
                                 <div class="combat-value">
                                     <label>灵能力强度</label>
-                                    <input type="number" name="system.combat.soulpower.value" value="{{system.combat.soulpower.value}}" min="0" />
-                                    <small>基础: {{combatValues.soulPower}} (心魄{{system.attributes.spirit.value}}的一半)</small>
+                                    <input type="number" name="system.combat.soulpower.value"
+                                        value="{{system.combat.soulpower.value}}" min="0" />
+                                    <small>基础: {{combatValues.soulPower}}
+                                        (心魄{{system.attributes.spirit.value}}的一半)</small>
                                 </div>
                             </div>
                         </section>
@@ -237,6 +251,7 @@
                     <section class="items">
                         <h3>物品清单</h3>
                         <div class="items-header">
+
                             <button type="button" class="item-create-popup" title="添加物品">
                                 <i class="fas fa-plus"></i> 添加物品
                             </button>
