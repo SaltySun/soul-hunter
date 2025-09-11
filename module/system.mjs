@@ -87,6 +87,10 @@ class HunterActorSheet extends ActorSheet {
         html.find(".power-tag").on("contextmenu", this._onPowerTagRemove.bind(this));
         html.find(".use-power").on("click", this._onUsePower.bind(this));
 
+        // 从角色卡直接使用武技/术法
+        html.find(".use-martial").on("click", this._onUseMartial.bind(this));
+        html.find(".use-spell").on("click", this._onUseSpell.bind(this));
+
         // 资源管理
         html.find(".resource-bar input").on("change", this._onResourceChange.bind(this));
     }
@@ -301,15 +305,22 @@ class HunterActorSheet extends ActorSheet {
         const power = this.actor.system.power || {};
         const rawTags = (power.tags || '').split(',').map(t=>t.trim()).filter(Boolean);
         let selected = [];
+        let extraTags = 0;
         await Dialog.wait({
             title: '使用灵能力 - 选择标签',
-            content: `<div class="tag-select">${rawTags.map(t=>`<button type=\"button\" class=\"tag-btn\" data-tag=\"${t}\">${t}</button>`).join('')}</div>`,
-            buttons: { ok: { label: '确定', callback: ()=>true }, cancel: { label: '取消', callback: ()=>false } },
+            content: `<div class="tag-select">${rawTags.map(t=>`<button type="button" class="tag-btn" data-tag="${t}">${t}</button>`).join('')}</div>
+                      <div style="margin-top:8px;"><label>额外标签数量：</label> <input type="number" id="extra-tags" value="0" min="0" style="width:80px;"/></div>`,
+            buttons: { ok: { label: '确定', callback: (html)=>{ extraTags = Number(html.find('#extra-tags').val()||0); return true; } }, cancel: { label: '取消', callback: ()=>false } },
             render: (html)=>{
                 html.find('.tag-btn').on('click', (ev)=>{
                     const t = ev.currentTarget.dataset.tag;
-                    if (!selected.includes(t)) selected.push(t);
-                    ev.currentTarget.classList.add('active');
+                    if (selected.includes(t)) {
+                        selected = selected.filter(x=>x!==t);
+                        ev.currentTarget.classList.remove('active');
+                    } else {
+                        selected.push(t);
+                        ev.currentTarget.classList.add('active');
+                    }
                 });
             }
         });
@@ -327,7 +338,8 @@ class HunterActorSheet extends ActorSheet {
         }) || 0;
 
         const tagDiceCount = selected.length;
-        const baseRoll = await new Roll(`1d20${tagDiceCount>0?` + ${tagDiceCount}d4`:''}`).roll();
+        const soulPower = Math.floor(Number(this.actor.system.combat.soulpower.value) || 0);
+        const baseRoll = await new Roll(`1d20${tagDiceCount>0?` + ${tagDiceCount}d4`:''}${extraTags>0?` + ${extraTags}d4`:''}${soulPower>0?` + ${soulPower}d4`:''}`).roll();
         const styleRoll = styleLevel>0 ? await new Roll(`${styleLevel}d6`).roll() : null;
         // 灵能力使用后自动消耗灵力值：每确认一个标签 -1 MP
         if (tagDiceCount > 0) {
@@ -349,10 +361,62 @@ class HunterActorSheet extends ActorSheet {
             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
             flavor: `使用灵能力：${power.name || ''}（标签：${selected.join(', ') || '无'}）`,
             rolls: [baseRoll].concat(styleRoll?[styleRoll]:[]),
-            content: `<div class=\"hunter-dice-roll\">\n                <div class=\"dice-header\"><div class=\"dice-formula\">1d20${tagDiceCount>0?` + ${tagDiceCount}d4`:''}${styleRoll?` + ${styleLevel}d6`:''}</div></div>\n                <div class=\"dice-result\"><div class=\"dice-total\">${total}</div><div class=\"success-level ${total>=10?'success':'failure'}\">${successText}</div></div>\n                <details class=\"dice-collapsible\"><summary>查看骰子详情</summary>${await baseRoll.render()}${styleRoll?await styleRoll.render():''}</details>\n                <div class=\"note\">本次使用了 ${tagDiceCount} 个标签，已消耗 ${tagDiceCount} 点灵力值；时髦值已自动累计。</div>\n            </div>`
+            content: `<div class=\"hunter-dice-roll\">\n                <div class=\"dice-header\"><div class=\"dice-formula\">1d20${tagDiceCount>0?` + ${tagDiceCount}d4`:''}${extraTags>0?` + ${extraTags}d4`:''}${soulPower>0?` + ${soulPower}d4`:''}${styleRoll?` + ${styleLevel}d6`:''}</div></div>\n                <div class=\"dice-result\"><div class=\"dice-total\">${total}</div><div class=\"success-level ${total>=10?'success':'failure'}\">${successText}</div></div>\n                <details class=\"dice-collapsible\"><summary>查看骰子详情</summary>${await baseRoll.render()}${styleRoll?await styleRoll.render():''}</details>\n                <div class=\"note\">标签 ${tagDiceCount}（扣MP）、额外标签 ${extraTags}（不扣资源）、灵能力强度 ${soulPower}d4；时髦值已自动累计。</div>\n            </div>`
         };
         ChatMessage.create(messageData);
     }
+
+    async _onUseMartial(event) {
+        event.preventDefault();
+        const martials = this.actor.items.filter(i=>i.type==='martial');
+        if (martials.length === 0) { ui.notifications.info('没有可用的武技'); return; }
+        let chosenId = null;
+        await Dialog.wait({
+            title: '选择武技',
+            content: `<div>${martials.map(i=>`<button type=\"button\" class=\"martial-opt\" data-id=\"${i.id}\">${i.name}</button>`).join('')}</div>`,
+            buttons: { cancel: { label: '取消', callback: ()=>null } },
+            render: (html)=>{ html.find('.martial-opt').on('click', (ev)=>{ chosenId = ev.currentTarget.dataset.id; html.closest('.app').find('button:contains("取消")').click(); }); }
+        });
+        if (!chosenId) return;
+        const extra = await Dialog.wait({ title:'额外标签', content:'<p>额外标签数量（不消耗资源，每个+1d4）：</p><input type="number" id="x" value="0" min="0" style="width:80px;"/>', buttons:{ ok:{label:'确定', callback:(html)=>Number(html.find('#x').val()||0)}, cancel:{label:'取消', callback:()=>0} } })||0;
+        const currentStyleValue = this.actor.system.resources.style.value || 0;
+        const styleLevel = await Dialog.wait({ title:'时髦值等级选择', content:`<p>当前时髦值：${currentStyleValue}/100</p>`, buttons:{ none:{label:'不使用', callback:()=>0}, l1:{label:'等级1 (+1d6)', callback:()=>1}, l2:{label:'等级2 (+2d6)', callback:()=>2}, l3:{label:'等级3 (+3d6)', callback:()=>3} } })||0;
+        const martialPower = Math.floor(Number(this.actor.system.combat.martialpower.value)||0);
+        const baseRoll = await new Roll(`1d20${martialPower>0?` + ${martialPower}d4`:''}${extra>0?` + ${extra}d4`:''}`).roll();
+        const styleRoll = styleLevel>0 ? await new Roll(`${styleLevel}d6`).roll() : null;
+        if (styleRoll) { const curr = Number(this.actor.system.resources.style.value)||0; await this.actor.update({ 'system.resources.style.value': Math.min(100, curr + styleRoll.total) }); }
+        const total = baseRoll.total + (styleRoll?styleRoll.total:0);
+        const successLevel = Math.floor((total - 10) / 5);
+        const successText = successLevel > 0 ? `成功等级 ${successLevel}` : total >= 10 ? '成功' : '失败';
+        ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this.actor }), flavor:`使用武技`, rolls:[baseRoll].concat(styleRoll?[styleRoll]:[]), content:`<div class=\"hunter-dice-roll\"><div class=\"dice-header\"><div class=\"dice-formula\">1d20${martialPower>0?` + ${martialPower}d4`:''}${extra>0?` + ${extra}d4`:''}${styleRoll?` + ${styleLevel}d6`:''}</div></div><div class=\"dice-result\"><div class=\"dice-total\">${total}</div><div class=\"success-level ${total>=10?'success':'failure'}\">${successText}</div></div><details class=\"dice-collapsible\"><summary>查看骰子详情</summary>${await baseRoll.render()}${styleRoll?await styleRoll.render():''}</details><div class=\"note\">武技强度 ${martialPower}d4；额外标签 ${extra}（不消耗资源）</div></div>` });
+    }
+
+    async _onUseSpell(event) {
+        event.preventDefault();
+        const spells = this.actor.items.filter(i=>i.type==='spell');
+        if (spells.length === 0) { ui.notifications.info('没有可用的术法'); return; }
+        let chosenId = null;
+        await Dialog.wait({
+            title: '选择术法',
+            content: `<div>${spells.map(i=>`<button type=\"button\" class=\"spell-opt\" data-id=\"${i.id}\">${i.name}</button>`).join('')}</div>`,
+            buttons: { cancel: { label: '取消', callback: ()=>null } },
+            render: (html)=>{ html.find('.spell-opt').on('click', (ev)=>{ chosenId = ev.currentTarget.dataset.id; html.closest('.app').find('button:contains("取消")').click(); }); }
+        });
+        if (!chosenId) return;
+        const extra = await Dialog.wait({ title:'额外标签', content:'<p>额外标签数量（不消耗资源，每个+1d4）：</p><input type="number" id="x" value="0" min="0" style="width:80px;"/>', buttons:{ ok:{label:'确定', callback:(html)=>Number(html.find('#x').val()||0)}, cancel:{label:'取消', callback:()=>0} } })||0;
+        const currentStyleValue = this.actor.system.resources.style.value || 0;
+        const styleLevel = await Dialog.wait({ title:'时髦值等级选择', content:`<p>当前时髦值：${currentStyleValue}/100</p>`, buttons:{ none:{label:'不使用', callback:()=>0}, l1:{label:'等级1 (+1d6)', callback:()=>1}, l2:{label:'等级2 (+2d6)', callback:()=>2}, l3:{label:'等级3 (+3d6)', callback:()=>3} } })||0;
+        const spellPower = Math.floor(Number(this.actor.system.combat.spellpower.value)||0);
+        const baseRoll = await new Roll(`1d20${spellPower>0?` + ${spellPower}d4`:''}${extra>0?` + ${extra}d4`:''}`).roll();
+        const styleRoll = styleLevel>0 ? await new Roll(`${styleLevel}d6`).roll() : null;
+        if (styleRoll) { const curr = Number(this.actor.system.resources.style.value)||0; await this.actor.update({ 'system.resources.style.value': Math.min(100, curr + styleRoll.total) }); }
+        const total = baseRoll.total + (styleRoll?styleRoll.total:0);
+        const successLevel = Math.floor((total - 10) / 5);
+        const successText = successLevel > 0 ? `成功等级 ${successLevel}` : total >= 10 ? '成功' : '失败';
+        ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this.actor }), flavor:`使用术法`, rolls:[baseRoll].concat(styleRoll?[styleRoll]:[]), content:`<div class=\"hunter-dice-roll\"><div class=\"dice-header\"><div class=\"dice-formula\">1d20${spellPower>0?` + ${spellPower}d4`:''}${extra>0?` + ${extra}d4`:''}${styleRoll?` + ${styleLevel}d6`:''}</div></div><div class=\"dice-result\"><div class=\"dice-total\">${total}</div><div class=\"success-level ${total>=10?'success':'failure'}\">${successText}</div></div><details class=\"dice-collapsible\"><summary>查看骰子详情</summary>${await baseRoll.render()}${styleRoll?await styleRoll.render():''}</details><div class=\"note\">术法强度 ${spellPower}d4；额外标签 ${extra}（不消耗资源）</div></div>` });
+    }
+
+    
 
     _onItemCreatePopup(event) {
         event.preventDefault();
@@ -670,6 +734,67 @@ Hooks.on("renderChatMessage", (message, html, data) => {
             details.style.display = "none";
             icon.className = "fas fa-chevron-down";
             button.innerHTML = '<i class="fas fa-chevron-down"></i> 查看详情';
+        }
+    });
+});
+
+// 在场景工具栏添加骰点工具
+Hooks.on('getSceneControlButtons', (controls) => {
+    const tokenControls = controls.find(c => c.name === 'token');
+    if (!tokenControls) return;
+    tokenControls.tools.push({
+        name: 'soul-hunter-dice-tool',
+        title: '骰点工具',
+        icon: 'fas fa-dice',
+        button: true,
+        onClick: async () => {
+            let d4 = 0, d6 = 0, target = 10;
+            await Dialog.wait({
+                title: '骰点工具',
+                content: `
+                    <div class="dice-tool-form">
+                        <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+                            <label style="min-width:70px;">D4 个数</label>
+                            <input type="number" id="dice-d4" value="0" min="0" style="width:80px;"/>
+                        </div>
+                        <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+                            <label style="min-width:70px;">D6 个数</label>
+                            <input type="number" id="dice-d6" value="0" min="0" style="width:80px;"/>
+                        </div>
+                        <div style="display:flex;gap:8px;align-items:center;">
+                            <label style="min-width:70px;">对抗值</label>
+                            <input type="number" id="target" value="10" min="0" style="width:80px;"/>
+                        </div>
+                    </div>
+                `,
+                buttons: {
+                    roll: {
+                        label: '投掷',
+                        callback: (html) => {
+                            d4 = Number(html.find('#dice-d4').val() || 0);
+                            d6 = Number(html.find('#dice-d6').val() || 0);
+                            target = Number(html.find('#target').val() || 10);
+                            return true;
+                        }
+                    },
+                    cancel: { label: '取消', callback: () => false }
+                }
+            });
+
+            const parts = ["1d20"]; 
+            if (d4 > 0) parts.push(`${d4}d4`);
+            if (d6 > 0) parts.push(`${d6}d6`);
+            const baseRoll = await new Roll(parts.join(" + ")).roll();
+            const total = baseRoll.total;
+            const successLevel = Math.floor((total - target) / 5);
+            const successText = successLevel > 0 ? `成功等级 ${successLevel}` : total >= target ? '成功' : '失败';
+
+            ChatMessage.create({
+                speaker: ChatMessage.getSpeaker({ actor: game.user?.character }),
+                flavor: `骰点工具：1d20${d4>0?` + ${d4}d4`:''}${d6>0?` + ${d6}d6`:''} 对抗 ${target}`,
+                rolls: [baseRoll],
+                content: `<div class=\"hunter-dice-roll\">\n                    <div class=\"dice-header\"><div class=\"dice-formula\">${parts.join(' + ')} vs ${target}</div></div>\n                    <div class=\"dice-total-result\"><div class=\"dice-total\">${total}</div><div class=\"success-level ${total>=target?'success':'failure'}\">${successText}</div></div>\n                    <details class=\"dice-collapsible\"><summary>查看骰子详情</summary>${await baseRoll.render()}</details>\n                </div>`
+            });
         }
     });
 });

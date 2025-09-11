@@ -53,7 +53,7 @@
         
         "Power": {
             "Name": "名称",
-            "Tags": "专精标签",
+            "Tags": "灵能力标签",
             "Consumption": "消耗",
             "Bonus": "加骰",
             "Weakness": "弱点触发",

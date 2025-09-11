@@ -167,6 +167,9 @@
 .dice-roll{
 
 }
+.sheet-body button{
+    color: #fff;
+}
 /* 灵能力标签样式 */
 .power-tags {
     display: flex;
