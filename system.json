@@ -2,10 +2,10 @@
     "id": "soul-hunter",
     "title": "狩魂者 TRPG (v12)",
     "description": "Foundry VTT system for 狩魂者 TRPG with attributes, skills, spirit power.",
-    "version": "0.2.0",
+    "version": "0.3.2",
     "compatibility": {
         "minimum": "12",
-        "verified": "12.343"
+        "verified": "13"
     },
     "authors": [
         {
@@ -26,8 +26,8 @@
         }
     ],
     "packs": [],
-    "manifest": "https://github.com/SaltySun/soul-hunter/releases/download/0.2.0/system.json",
-    "download": "https://github.com/SaltySun/soul-hunter/releases/download/0.2.0/system.json",
+    "manifest": "https://github.com/SaltySun/soul-hunter/releases/download/0.3.2/system.json",
+    "download": "https://github.com/SaltySun/soul-hunter/releases/download/0.3.2/soul-hunter.zip",
     "grid": {
         "distance": 1,
         "units": "m",

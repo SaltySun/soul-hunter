@@ -74,7 +74,9 @@
 .popup-body {
     padding: 20px;
 }
-
+.item .sheet-body{
+    padding: 4px 8px;
+}
 .item-type-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

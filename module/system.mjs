@@ -522,7 +522,7 @@ class HunterItemSheet extends ItemSheet {
         return foundry.utils.mergeObject(super.defaultOptions, {
             classes: ["soul-hunter", "sheet", "item"],
             width: 500,
-            height: 400
+            height: 600
         });
     }
 
